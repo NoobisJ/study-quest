@@ -1,0 +1,47 @@
+{
+  "id": "./",
+  "name": "Study Quest",
+  "short_name": "Study Quest",
+  "description": "Turn anything you need to do into a customizable focus quest.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f7f1df",
+  "theme_color": "#163a31",
+  "categories": ["education", "productivity", "games"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Start a focus quest",
+      "short_name": "Focus",
+      "url": "./#focus",
+      "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "Forge a mission",
+      "short_name": "New mission",
+      "url": "./#new-mission",
+      "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]
+    }
+  ]
+}

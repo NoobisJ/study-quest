@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#163a31">
+  <meta name="description" content="Turn anything you need to do into a customizable focus quest with timers, mission cards, and a cozy fox companion.">
+  <meta name="application-name" content="Study Quest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Study Quest">
+  <title>Study Quest</title>
+  <style>
+    :root{--ink:#17352d;--muted:#61776d;--cream:#f7f1df;--paper:#fffdf6;--green:#2f735b;--green2:#78a36d;--gold:#e6a84b;--coral:#d7725c;--line:#dce4d6;--shadow:0 18px 50px #17352d1a}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);font-family:Inter,ui-rounded,"Segoe UI",system-ui,sans-serif;background:radial-gradient(circle at 15% 15%,#f9e7b9 0 5%,transparent 27%),linear-gradient(145deg,#dcead8,#f8f2de 55%,#dae9dd);overflow-x:hidden}
+    body:before,body:after{content:"";position:fixed;z-index:-1;border-radius:50%;filter:blur(2px);opacity:.5}body:before{width:360px;height:360px;background:#8fb99b;right:-140px;top:-80px}body:after{width:260px;height:260px;background:#f1cf7a;left:-90px;bottom:-120px}
+    button,input{font:inherit}button{cursor:pointer}.app{width:min(1180px,calc(100% - 32px));margin:28px auto 50px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.brand{display:flex;align-items:center;gap:12px}.brand-mark{width:42px;height:42px;border-radius:14px;background:var(--green);display:grid;place-items:center;color:white;box-shadow:0 7px 18px #2f735b55}.brand h1{font-family:Georgia,serif;font-size:25px;margin:0}.brand p{font-size:12px;color:var(--muted);margin:1px 0 0}.stats{display:flex;gap:8px}.pill{background:#ffffffa8;border:1px solid #fff;padding:9px 13px;border-radius:999px;font-weight:750;font-size:13px;box-shadow:0 8px 24px #17352d12}
+    .grid{display:grid;grid-template-columns:1.45fr .85fr;gap:18px}.card{background:#fffdf6e8;border:1px solid #ffffffb8;border-radius:28px;box-shadow:var(--shadow);backdrop-filter:blur(12px)}.hero{padding:30px;position:relative;overflow:hidden}.eyebrow{font-size:12px;font-weight:850;letter-spacing:.15em;text-transform:uppercase;color:var(--green)}.hero h2{font-family:Georgia,serif;font-size:clamp(32px,5vw,57px);line-height:1.02;margin:9px 0 12px;max-width:760px}.sub{color:var(--muted);font-size:15px;line-height:1.55;max-width:650px}.questbox{margin-top:23px;background:#f5f0de;border:1px solid #e9dec2;border-radius:19px;padding:16px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px}.quest-icon{width:44px;height:44px;border-radius:14px;background:#e5c873;display:grid;place-items:center;font-size:22px}.questbox label{display:block;font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.1em}.questbox input{width:100%;border:0;background:transparent;color:var(--ink);font-size:17px;font-weight:800;outline:0;padding:3px 0}.save{border:0;background:white;color:var(--green);padding:9px 12px;border-radius:11px;font-weight:800}.save:hover{transform:translateY(-1px)}
+    .timer-area{margin-top:25px;display:grid;grid-template-columns:230px 1fr;gap:24px;align-items:center}.clock{width:210px;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(var(--green) var(--angle,0deg),#dce5d8 0);box-shadow:inset 0 0 0 15px #fffdf6}.clock:after{content:"";position:absolute;inset:24px;border-radius:50%;background:var(--paper);box-shadow:inset 0 3px 18px #17352d12}.time{position:relative;z-index:1;text-align:center}.time strong{font-family:Georgia,serif;font-size:48px;display:block;line-height:.95}.time small{color:var(--muted);font-size:11px;font-weight:850;letter-spacing:.15em;text-transform:uppercase}.controls h3{margin:0 0 8px;font-size:17px}.presets{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}.preset{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 10px;color:var(--muted);font-size:12px;font-weight:750}.preset.active{color:white;background:var(--green);border-color:var(--green)}.mainbtn{border:0;width:100%;border-radius:15px;padding:14px;background:var(--green);color:white;font-weight:850;box-shadow:0 9px 20px #2f735b38;transition:.2s}.mainbtn:hover{transform:translateY(-2px);filter:brightness(1.05)}.secondary{display:flex;gap:8px;margin-top:8px}.secondary button{flex:1;border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px;color:var(--ink);font-weight:750}.hint{font-size:11px;color:var(--muted);margin:10px 0 0;line-height:1.4}
+    .side{padding:24px;display:flex;flex-direction:column}.companion-stage{height:190px;border-radius:22px;background:linear-gradient(#d8ead6 0 68%,#bdd19d 68%);position:relative;overflow:hidden;display:grid;place-items:center}.companion-stage:before{content:"";position:absolute;left:18px;top:17px;width:56px;height:56px;border-radius:50%;background:#fff3b8;box-shadow:90px 30px 0 -20px #fff9db}.tree{position:absolute;bottom:37px;right:16px;width:28px;height:80px;background:#795a3d;border-radius:9px}.tree:before{content:"";position:absolute;width:95px;height:95px;border-radius:50%;background:#56805e;left:-38px;top:-55px;box-shadow:28px -18px 0 -10px #6c9565}.buddy{position:relative;z-index:2;width:112px;height:104px;margin-top:25px;animation:breathe 2.8s ease-in-out infinite}.buddy-body{position:absolute;inset:25px 13px 0;background:#e99d55;border-radius:48% 48% 43% 43%;box-shadow:inset -10px -6px #d27f43}.ear{position:absolute;top:12px;width:39px;height:43px;background:#e99d55;transform:rotate(45deg);border-radius:8px 25px 8px 25px}.ear.l{left:13px}.ear.r{right:13px;transform:rotate(135deg)}.face{position:absolute;z-index:3;left:28px;top:39px;width:56px;height:43px;background:#fff0d7;border-radius:45%;}.eye{position:absolute;top:14px;width:6px;height:8px;background:#203b34;border-radius:50%}.eye.l{left:13px}.eye.r{right:13px}.nose{position:absolute;left:25px;top:23px;width:7px;height:6px;background:#4e4139;border-radius:50%}.tail{position:absolute;right:1px;bottom:0;width:52px;height:34px;background:#e99d55;border-radius:80% 20% 70% 20%;transform:rotate(-18deg);transform-origin:left}.buddy.focusing .eye{height:2px;top:17px}.buddy.cheer{animation:cheer .6s ease 2}.speech{position:absolute;top:12px;right:12px;z-index:4;background:white;border-radius:12px 12px 3px 12px;padding:8px 10px;max-width:150px;font-size:11px;font-weight:700;box-shadow:0 7px 20px #17352d18}.companion-copy h3{font-family:Georgia,serif;font-size:22px;margin:18px 0 5px}.companion-copy p{color:var(--muted);font-size:13px;line-height:1.45;margin:0}.level{margin-top:17px}.levelhead{display:flex;justify-content:space-between;font-size:12px;font-weight:800;margin-bottom:7px}.bar{height:10px;background:#e5e8dc;border-radius:999px;overflow:hidden}.fill{height:100%;width:0;background:linear-gradient(90deg,var(--green2),var(--gold));border-radius:999px;transition:.5s}
+    .bottom{grid-column:1/-1;display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.steps,.rewards{padding:22px}.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.section-title h3{margin:0;font-family:Georgia,serif;font-size:22px}.section-title span{color:var(--muted);font-size:12px}.step-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.step{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fff;transition:.2s}.step.done{opacity:.64;background:#ecf3e8}.step button{width:26px;height:26px;border-radius:50%;border:2px solid #b7c7b5;background:transparent;float:right;color:transparent}.step.done button{background:var(--green);border-color:var(--green);color:white}.step strong{font-size:13px;display:block;margin-bottom:4px}.step small{color:var(--muted);line-height:1.35}.reward-row{display:flex;gap:9px}.reward{flex:1;background:#f5f0de;border-radius:16px;padding:13px;text-align:center}.reward .big{font-size:24px}.reward strong{display:block;font-size:12px;margin-top:3px}.danger{margin-top:12px;border:0;background:transparent;color:var(--coral);font-size:11px;text-decoration:underline}
+    .modal{position:fixed;inset:0;background:#15322ccc;z-index:20;display:none;place-items:center;padding:18px}.modal.show{display:grid}.modal-card{width:min(520px,100%);background:var(--paper);border-radius:25px;padding:27px;box-shadow:0 30px 80px #0005}.modal-card h2{font-family:Georgia,serif;font-size:29px;margin:0 0 8px}.modal-card p{color:var(--muted);line-height:1.5}.modal-card textarea{width:100%;min-height:95px;border:1px solid var(--line);border-radius:13px;padding:12px;background:white;resize:vertical}.modal-actions{display:flex;gap:9px;margin-top:12px}.modal-actions button{flex:1;border:0;border-radius:12px;padding:12px;font-weight:800}.modal-actions .claim{background:var(--green);color:white}.modal-actions .skip{background:#e9eadf;color:var(--ink)}.toast{position:fixed;left:50%;bottom:25px;z-index:30;transform:translate(-50%,30px);opacity:0;background:#17352d;color:white;padding:11px 17px;border-radius:999px;font-weight:750;font-size:13px;transition:.25s}.toast.show{transform:translate(-50%,0);opacity:1}.confetti{position:fixed;z-index:40;width:8px;height:12px;top:-20px;animation:fall 1.8s linear forwards}
+    @keyframes breathe{50%{transform:translateY(-5px) scale(1.02)}}@keyframes cheer{50%{transform:translateY(-18px) rotate(5deg)}}@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+    @media(max-width:850px){.grid,.bottom{grid-template-columns:1fr}.timer-area{grid-template-columns:1fr}.clock{margin:auto}.step-list{grid-template-columns:1fr}.stats .pill:first-child{display:none}}@media(max-width:520px){.app{width:min(100% - 18px,1180px);margin-top:12px}.hero,.side{padding:19px}.top{align-items:flex-start}.stats{flex-direction:column}.questbox{grid-template-columns:auto 1fr}.questbox .save{grid-column:1/-1}.hero h2{font-size:37px}}
+  </style>
+  <link rel="stylesheet" href="v2.css">
+  <link rel="stylesheet" href="v3.css">
+  <link rel="stylesheet" href="pwa.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/favicon.png" type="image/png" sizes="64x64">
+  <link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <div class="brand"><div class="brand-mark">✦</div><div><h1>Study Quest</h1><p>Your cozy focus camp</p></div></div>
+      <div class="stats"><div class="pill">🔥 <span id="streak">0</span> day streak</div><div class="pill">🪙 <span id="coins">0</span></div></div>
+    </header>
+    <section class="grid">
+      <article class="card hero">
+        <div class="eyebrow">Today’s main quest · AP Calculus BC</div>
+        <h2>Make one brave start.</h2>
+        <p class="sub">You don’t need to finish everything right now. Begin Mrs. Song’s newest homework, earn XP for focused effort, and let the next step reveal itself.</p>
+        <div class="questbox">
+          <div class="quest-icon">📐</div>
+          <div><label for="quest">Current quest — click to edit</label><input id="quest" value="Mrs. Song’s most recent homework" aria-label="Current quest"></div>
+          <button class="save" id="saveQuest">Save quest</button>
+        </div>
+        <div class="timer-area">
+          <div class="clock" id="clock"><div class="time"><strong id="time">25:00</strong><small id="modeLabel">ready</small></div></div>
+          <div class="controls">
+            <h3>Choose your sprint</h3>
+            <div class="presets"><button class="preset" data-min="1">1m test</button><button class="preset" data-min="15">15m warm-up</button><button class="preset active" data-min="25">25m focus</button><button class="preset" data-min="45">45m deep</button></div>
+            <button class="mainbtn" id="start">Begin focus quest</button>
+            <div class="secondary"><button id="reset">Reset</button><button id="stuck">I’m stuck</button></div>
+            <p class="hint">Finishing a session earns 20 XP + 5 coins. Your progress stays on this device.</p>
+          </div>
+        </div>
+      </article>
+      <aside class="card side">
+        <div class="companion-stage"><div class="speech" id="speech">I’m ready when you are.</div><div class="tree"></div><div class="buddy" id="buddy"><div class="ear l"></div><div class="ear r"></div><div class="tail"></div><div class="buddy-body"></div><div class="face"><i class="eye l"></i><i class="eye r"></i><i class="nose"></i></div></div></div>
+        <div class="companion-copy"><h3>Meet Moss</h3><p>Your focus fox. Moss studies quietly with you and celebrates real effort—not perfection.</p></div>
+        <div class="level"><div class="levelhead"><span>Level <b id="level">1</b> · Trail Starter</span><span><b id="xp">0</b>/100 XP</span></div><div class="bar"><div class="fill" id="xpFill"></div></div></div>
+      </aside>
+      <div class="bottom">
+        <section class="card steps"><div class="section-title"><h3>Quest trail</h3><span>Tap circles as you go</span></div><div class="step-list">
+          <div class="step"><button aria-label="Complete step">✓</button><strong>Open the assignment</strong><small>Get the newest homework in front of you.</small></div>
+          <div class="step"><button aria-label="Complete step">✓</button><strong>Do the first problem</strong><small>Messy work is completely allowed.</small></div>
+          <div class="step"><button aria-label="Complete step">✓</button><strong>Mark the hard parts</strong><small>Circle anything to ask Mrs. Song.</small></div>
+        </div></section>
+        <section class="card rewards"><div class="section-title"><h3>Camp rewards</h3><span>Today</span></div><div class="reward-row"><div class="reward"><div class="big">⏱</div><strong><span id="sessions">0</span> sessions</strong></div><div class="reward"><div class="big">🌱</div><strong><span id="totalMin">0</span> minutes</strong></div><div class="reward"><div class="big">✨</div><strong><span id="stepsDone">0</span>/3 steps</strong></div></div><button class="danger" id="clear">Reset all progress</button></section>
+      </div>
+    </section>
+  </main>
+  <div class="modal" id="modal"><div class="modal-card"><div class="eyebrow">Sprint complete</div><h2>Nice work—claim your reward.</h2><p>Before moving on, write one thing you learned or one question you still have. A short sentence is enough.</p><textarea id="reflection" placeholder="I learned… / I’m still wondering…"></textarea><div class="modal-actions"><button class="skip" id="skip">Later</button><button class="claim" id="claim">Claim 20 XP + 5 coins</button></div></div></div>
+  <div class="toast" id="toast"></div>
+  <script>
+    const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+    const key='studyQuest.v1'; let state=JSON.parse(localStorage.getItem(key)||'{}');
+    state={xp:0,coins:0,sessions:0,totalMin:0,quest:'Mrs. Song’s most recent homework',steps:[false,false,false],lastDay:null,streak:0,...state};
+    let chosen=25,left=1500,running=false,timer=null;
+    const save=()=>localStorage.setItem(key,JSON.stringify(state));
+    function render(){
+      $('#coins').textContent=state.coins;$('#sessions').textContent=state.sessions;$('#totalMin').textContent=state.totalMin;$('#streak').textContent=state.streak;
+      const level=Math.floor(state.xp/100)+1, within=state.xp%100;$('#level').textContent=level;$('#xp').textContent=within;$('#xpFill').style.width=within+'%';
+      $('#quest').value=state.quest;state.steps.forEach((v,i)=>$$('.step')[i].classList.toggle('done',v));$('#stepsDone').textContent=state.steps.filter(Boolean).length;
+    }
+    function format(n){return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')}
+    function drawClock(){$('#time').textContent=format(left);$('#clock').style.setProperty('--angle',(360*(chosen*60-left)/(chosen*60))+'deg')}
+    function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+    function ping(){try{const a=new AudioContext(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.setValueAtTime(523,a.currentTime);o.frequency.exponentialRampToValueAtTime(784,a.currentTime+.25);g.gain.setValueAtTime(.08,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.5);o.start();o.stop(a.currentTime+.5)}catch(e){}}
+    function stop(){clearInterval(timer);running=false;$('#start').textContent='Resume focus quest';$('#modeLabel').textContent='paused';$('#buddy').classList.remove('focusing');$('#speech').textContent='I’ll hold your place.'}
+    function finish(){clearInterval(timer);running=false;left=0;drawClock();ping();$('#modeLabel').textContent='complete';$('#buddy').classList.remove('focusing');$('#buddy').classList.add('cheer');$('#speech').textContent='You did it! That effort counts.';setTimeout(()=>$('#buddy').classList.remove('cheer'),1500);$('#modal').classList.add('show')}
+    $('#start').onclick=()=>{if(running){stop();return}if(left<=0)left=chosen*60;running=true;$('#start').textContent='Pause quest';$('#modeLabel').textContent='focusing';$('#buddy').classList.add('focusing');$('#speech').textContent='Shh… I’m focusing with you.';timer=setInterval(()=>{left--;drawClock();if(left<=0)finish()},1000)};
+    $$('.preset').forEach(b=>b.onclick=()=>{if(running)stop();chosen=+b.dataset.min;left=chosen*60;$$('.preset').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#start').textContent='Begin focus quest';$('#modeLabel').textContent='ready';drawClock()});
+    $('#reset').onclick=()=>{if(running)stop();left=chosen*60;$('#start').textContent='Begin focus quest';$('#modeLabel').textContent='ready';drawClock()};
+    $('#saveQuest').onclick=()=>{state.quest=$('#quest').value.trim()||'Mrs. Song’s most recent homework';save();render();toast('Quest saved ✓')};
+    $('#stuck').onclick=()=>{const ideas=['Open the assignment—nothing else yet.','Write the problem number and copy the givens.','Work for just two minutes, then choose again.','Circle the first confusing symbol or step.'];$('#speech').textContent=ideas[Math.floor(Math.random()*ideas.length)];toast('Moss made the next step tiny')};
+    $$('.step button').forEach((b,i)=>b.onclick=()=>{state.steps[i]=!state.steps[i];if(state.steps[i]){state.xp+=5;state.coins+=1;toast('+5 XP · trail step complete')}save();render()});
+    function reward(){state.xp+=20;state.coins+=5;state.sessions++;state.totalMin+=chosen;const today=new Date().toDateString();if(state.lastDay!==today){const y=new Date();y.setDate(y.getDate()-1);state.streak=state.lastDay===y.toDateString()?state.streak+1:1;state.lastDay=today}state.reflection=$('#reflection').value.trim();save();render();$('#modal').classList.remove('show');confetti();left=chosen*60;$('#start').textContent='Begin another quest';$('#modeLabel').textContent='ready';drawClock()}
+    $('#claim').onclick=reward;$('#skip').onclick=reward;
+    function confetti(){for(let i=0;i<36;i++){const e=document.createElement('i');e.className='confetti';e.style.left=Math.random()*100+'vw';e.style.background=['#e6a84b','#2f735b','#d7725c','#78a36d'][i%4];e.style.animationDelay=Math.random()*.5+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),2400)}}
+    $('#clear').onclick=()=>{if(confirm('Reset XP, coins, sessions, and quest trail?')){localStorage.removeItem(key);location.reload()}};
+    render();drawClock();
+  </script>
+  <script src="v2.js"></script>
+  <script src="v3.js"></script>
+  <script src="pwa-v2.js"></script>
+</body>
+</html>
