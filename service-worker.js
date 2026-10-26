@@ -1,4 +1,4 @@
-const CACHE_NAME = 'study-quest-shell-v4';
+const CACHE_NAME = 'study-quest-shell-v5';
 const SHELL_FILES = [
   './',
   './index.html',
@@ -8,6 +8,8 @@ const SHELL_FILES = [
   './v3.js',
   './pwa.css',
   './pwa-v2.js',
+  './data-transfer.css',
+  './data-transfer.js',
   './manifest.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png',
