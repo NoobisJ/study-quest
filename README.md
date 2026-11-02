@@ -1,6 +1,10 @@
 # Study Quest
 
-Study Quest turns schoolwork, projects, chores, and personal goals into customizable focus quests. It includes classes/realms, detailed mission cards, custom focus timers, light and dark modes, XP, rewards, and Moss the focus fox.
+Study Quest turns schoolwork, projects, chores, and personal goals into customizable focus quests. It includes classes/realms, detailed mission cards, custom focus timers, light and dark modes, XP, rewards, Spotify focus music, and Moss the focus fox.
+
+## Spotify focus music
+
+Open **Spotify focus music** and paste a Spotify share link for a playlist, album, track, artist, show, or episode. Study Quest saves the link in this browser and adds Spotify's accessible embedded player beside the focus timer. Spotify playback requires an internet connection; the rest of Study Quest remains available offline.
 
 ## Install
 
