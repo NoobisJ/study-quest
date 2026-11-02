@@ -35,6 +35,11 @@
           <strong>Import progress</strong>
           <small>Choose a Study Quest backup and preview it before anything is replaced.</small>
         </button>
+        <a class="transfer-option" id="portableApp" download="Study-Quest-Portable.html">
+          <span class="transfer-icon" aria-hidden="true">▣</span>
+          <strong>Portable HTML app</strong>
+          <small>One self-contained file for offline use. Move it by USB, AirDrop, email, or an approved cloud drive.</small>
+        </a>
       </div>
       <input id="backupFile" type="file" accept="application/json,.json" hidden>
       <div class="transfer-preview" id="transferPreview">
@@ -54,7 +59,11 @@
   const preview = modal.querySelector('#transferPreview');
   const previewCopy = modal.querySelector('#previewCopy');
   const undoButton = modal.querySelector('#undoImport');
+  const portableLink = modal.querySelector('#portableApp');
   let pendingBackup = null;
+
+  portableLink.href = location.protocol === 'file:' ? location.href : './Study-Quest-Portable.html';
+  portableLink.style.textDecoration = 'none';
 
   const notify = message => typeof toast === 'function' ? toast(message) : alert(message);
   const closeModal = () => { modal.classList.remove('show'); preview.classList.remove('show'); pendingBackup = null; fileInput.value = ''; };

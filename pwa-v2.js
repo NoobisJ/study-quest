@@ -9,6 +9,7 @@
   installButton.setAttribute('aria-label', 'Install Study Quest app');
   installButton.innerHTML = '<span class="connection-dot" aria-hidden="true"></span><span class="install-label">Install app</span><span aria-hidden="true">↘</span>';
   top.insertBefore(installButton, stats);
+  if (location.protocol === 'file:') installButton.hidden = true;
 
   const modal = document.createElement('div');
   modal.className = 'install-modal';
@@ -89,7 +90,7 @@
   setConnection();
   updateInstallState();
 
-  if ('serviceWorker' in navigator) {
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
     addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(() => {}));
   }
 
