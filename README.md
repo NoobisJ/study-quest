@@ -2,6 +2,8 @@
 
 Study Quest turns schoolwork, projects, chores, and personal goals into customizable focus quests. It includes a daily command center, flexible goals, seven-day momentum, distraction-free focus mode, classes/realms, detailed mission cards, custom focus timers, light and dark modes, XP, rewards, Spotify focus music, and Moss the focus fox.
 
+The app opens as a clean, universal quest space with no preloaded class, teacher, or assignment. New users choose what they want to work on, and older copies automatically replace the original calculus demo with the same neutral starting space while preserving genuinely customized missions.
+
 ## Start with Today
 
 The **Today** command center keeps the next useful action visible: resume the active mission, begin a focus sprint, or forge something new. Set a daily session and minute goal, then use the seven-day momentum view to build consistency without punishing broken streaks. **Focus shield** temporarily hides the deeper game systems while a timer is running; everything returns when you leave focus mode.

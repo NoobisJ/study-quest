@@ -20,4 +20,5 @@ for (const required of ['v4.css', 'v4.js']) {
 if (/<script[^>]+src=/.test(portable) || /<link rel="stylesheet"/.test(portable)) throw new Error('Portable build still has external code assets.');
 if (manifest.name !== 'Study Quest' || manifest.display !== 'standalone') throw new Error('Unexpected web app manifest.');
 
-console.log(`Validated ${localReferences.length} local assets, offline shell v8, and ${Math.round(Buffer.byteLength(portable) / 1024)} KB portable build.`);
+if (!serviceWorker.includes("study-quest-shell-v9")) throw new Error('Expected offline shell v9.');
+console.log(`Validated ${localReferences.length} local assets, offline shell v9, and ${Math.round(Buffer.byteLength(portable) / 1024)} KB portable build.`);

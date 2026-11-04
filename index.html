@@ -42,12 +42,12 @@
     </header>
     <section class="grid">
       <article class="card hero">
-        <div class="eyebrow">Today’s main quest · AP Calculus BC</div>
+        <div class="eyebrow">Today’s main quest · Your next adventure</div>
         <h2>Make one brave start.</h2>
-        <p class="sub">You don’t need to finish everything right now. Begin Mrs. Song’s newest homework, earn XP for focused effort, and let the next step reveal itself.</p>
+        <p class="sub">Choose anything you want to move forward—school, a creative project, training, life admin, or something completely your own.</p>
         <div class="questbox">
-          <div class="quest-icon">📐</div>
-          <div><label for="quest">Current quest — click to edit</label><input id="quest" value="Mrs. Song’s most recent homework" aria-label="Current quest"></div>
+          <div class="quest-icon">🧭</div>
+          <div><label for="quest">Current quest — click to edit</label><input id="quest" value="Choose your first quest" aria-label="Current quest"></div>
           <button class="save" id="saveQuest">Save quest</button>
         </div>
         <div class="timer-area">
@@ -68,9 +68,9 @@
       </aside>
       <div class="bottom">
         <section class="card steps"><div class="section-title"><h3>Quest trail</h3><span>Tap circles as you go</span></div><div class="step-list">
-          <div class="step"><button aria-label="Complete step">✓</button><strong>Open the assignment</strong><small>Get the newest homework in front of you.</small></div>
-          <div class="step"><button aria-label="Complete step">✓</button><strong>Do the first problem</strong><small>Messy work is completely allowed.</small></div>
-          <div class="step"><button aria-label="Complete step">✓</button><strong>Mark the hard parts</strong><small>Circle anything to ask Mrs. Song.</small></div>
+          <div class="step"><button aria-label="Complete step">✓</button><strong>Choose one outcome</strong><small>Decide what progress would look like today.</small></div>
+          <div class="step"><button aria-label="Complete step">✓</button><strong>Make the first move</strong><small>Keep it small enough to begin right now.</small></div>
+          <div class="step"><button aria-label="Complete step">✓</button><strong>Leave a trail marker</strong><small>Save your progress and name the next step.</small></div>
         </div></section>
         <section class="card rewards"><div class="section-title"><h3>Camp rewards</h3><span>Today</span></div><div class="reward-row"><div class="reward"><div class="big">⏱</div><strong><span id="sessions">0</span> sessions</strong></div><div class="reward"><div class="big">🌱</div><strong><span id="totalMin">0</span> minutes</strong></div><div class="reward"><div class="big">✨</div><strong><span id="stepsDone">0</span>/3 steps</strong></div></div><button class="danger" id="clear">Reset all progress</button></section>
       </div>
@@ -81,7 +81,8 @@
   <script>
     const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
     const key='studyQuest.v1'; let state=JSON.parse(localStorage.getItem(key)||'{}');
-    state={xp:0,coins:0,sessions:0,totalMin:0,quest:'Mrs. Song’s most recent homework',steps:[false,false,false],lastDay:null,streak:0,...state};
+    state={xp:0,coins:0,sessions:0,totalMin:0,quest:'Choose your first quest',steps:[false,false,false],lastDay:null,streak:0,...state};
+    if(['Mrs. Song’s most recent homework',"Mrs. Song's most recent homework"].includes(state.quest))state.quest='Choose your first quest';
     let chosen=25,left=1500,running=false,timer=null;
     const save=()=>localStorage.setItem(key,JSON.stringify(state));
     function render(){
@@ -98,8 +99,8 @@
     $('#start').onclick=()=>{if(running){stop();return}if(left<=0)left=chosen*60;running=true;$('#start').textContent='Pause quest';$('#modeLabel').textContent='focusing';$('#buddy').classList.add('focusing');$('#speech').textContent='Shh… I’m focusing with you.';timer=setInterval(()=>{left--;drawClock();if(left<=0)finish()},1000)};
     $$('.preset').forEach(b=>b.onclick=()=>{if(running)stop();chosen=+b.dataset.min;left=chosen*60;$$('.preset').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#start').textContent='Begin focus quest';$('#modeLabel').textContent='ready';drawClock()});
     $('#reset').onclick=()=>{if(running)stop();left=chosen*60;$('#start').textContent='Begin focus quest';$('#modeLabel').textContent='ready';drawClock()};
-    $('#saveQuest').onclick=()=>{state.quest=$('#quest').value.trim()||'Mrs. Song’s most recent homework';save();render();toast('Quest saved ✓')};
-    $('#stuck').onclick=()=>{const ideas=['Open the assignment—nothing else yet.','Write the problem number and copy the givens.','Work for just two minutes, then choose again.','Circle the first confusing symbol or step.'];$('#speech').textContent=ideas[Math.floor(Math.random()*ideas.length)];toast('Moss made the next step tiny')};
+    $('#saveQuest').onclick=()=>{state.quest=$('#quest').value.trim()||'Choose your first quest';save();render();toast('Quest saved ✓')};
+    $('#stuck').onclick=()=>{const ideas=['Open what you need—nothing else yet.','Write down the smallest visible next action.','Work for just two minutes, then choose again.','Name the first thing that feels unclear or difficult.'];$('#speech').textContent=ideas[Math.floor(Math.random()*ideas.length)];toast('Moss made the next step tiny')};
     $$('.step button').forEach((b,i)=>b.onclick=()=>{state.steps[i]=!state.steps[i];if(state.steps[i]){state.xp+=5;state.coins+=1;toast('+5 XP · trail step complete')}save();render()});
     function reward(){state.xp+=20;state.coins+=5;state.sessions++;state.totalMin+=chosen;const today=new Date().toDateString();if(state.lastDay!==today){const y=new Date();y.setDate(y.getDate()-1);state.streak=state.lastDay===y.toDateString()?state.streak+1:1;state.lastDay=today}state.reflection=$('#reflection').value.trim();save();render();$('#modal').classList.remove('show');confetti();left=chosen*60;$('#start').textContent='Begin another quest';$('#modeLabel').textContent='ready';drawClock()}
     $('#claim').onclick=reward;$('#skip').onclick=reward;
