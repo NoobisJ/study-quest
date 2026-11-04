@@ -106,9 +106,10 @@
             <section class="party-timer-card">
               <div class="party-timer-ring" id="partyTimerRing"><div><strong id="partyTime">25:00</strong><span id="partyTimerMode">ready together</span></div></div>
               <div class="party-timer-controls">
-                <h3>One timer. One team.</h3><p>Anyone in the room can start, pause, or change the shared timer.</p>
+                <h3>One timer. One team.</h3><p>Everyone must be ready before the shared timer can start. Anyone can pause it.</p>
                 <div class="party-durations"><button data-party-min="15">15m</button><button class="active" data-party-min="25">25m</button><button data-party-min="45">45m</button><button data-party-min="60">60m</button></div>
                 <button class="party-focus-button" id="partyStart" type="button">▶ Start together</button>
+                <div class="party-ready-gate" id="partyReadyGate" role="status" aria-live="polite"></div>
               </div>
             </section>
             <section class="party-chat-card">
@@ -167,11 +168,32 @@
     $('#partyAvatarPicker').innerHTML = EMOJIS.map(emoji => `<button type="button" class="${emoji === prefs.avatar ? 'active' : ''}" data-avatar="${emoji}">${emoji}</button>`).join('');
   }
   function selfMember() { return { id: selfId || 'self', name: prefs.name || 'Trail Friend', avatar: prefs.avatar, color: prefs.color, ready: members.get(selfId)?.ready || false, host: isHost, self: true }; }
+  function partyMemberList() {
+    return [selfMember(), ...[...members.entries()].filter(([id]) => id !== selfId).map(([id, member]) => ({ id, ...member }))];
+  }
+  function readinessState() {
+    const list = partyMemberList();
+    const waiting = list.filter(member => !member.ready);
+    if (list.length < 2) return { canStart: false, text: 'Waiting for a friend to join and ready up.' };
+    if (waiting.length) {
+      const names = waiting.map(member => member.self ? 'you' : member.name || 'a friend');
+      return { canStart: false, text: `Waiting for ${names.join(' and ')} to be ready.` };
+    }
+    return { canStart: true, text: 'Everyone is ready ✓ Start when you are.' };
+  }
+  function renderReadyGate() {
+    const state = readinessState();
+    const isTimerRunning = typeof running === 'boolean' && running;
+    $('#partyReadyGate').textContent = isTimerRunning ? 'Focus session in progress · everyone is synced.' : state.text;
+    $('#partyReadyGate').classList.toggle('ready', state.canStart && !isTimerRunning);
+    $('#partyStart').disabled = !isTimerRunning && !state.canStart;
+  }
   function renderMembers() {
-    const list = [selfMember(), ...[...members.entries()].filter(([id]) => id !== selfId).map(([id, member]) => ({ id, ...member }))];
+    const list = partyMemberList();
     $('#partyCount').textContent = list.length;
     $('#partyMemberCount').textContent = `${list.length} adventurer${list.length === 1 ? '' : 's'}`;
     $('#partyMembers').innerHTML = list.map(member => `<article class="party-member ${member.ready ? 'ready' : ''}"><div class="party-member-avatar" style="--member:${esc(member.color || COLORS[0])}">${esc(member.avatar || '🧭')}<i></i></div><div><strong>${esc(member.name)}${member.self ? ' <small>you</small>' : ''}</strong><span>${member.ready ? 'Ready to focus' : 'At the camp'}</span></div><b>${member.ready ? '✓' : '·'}</b></article>`).join('');
+    renderReadyGate();
   }
   function addFeed(entry) {
     messages.push({ at: Date.now(), ...entry });
@@ -239,6 +261,7 @@
     $('#partyStart').textContent = snapshot.status === 'running' ? 'Ⅱ Pause together' : snapshot.status === 'paused' ? '▶ Resume together' : '▶ Start together';
     const total = Math.max(60, snapshot.minutes * 60); $('#partyTimerRing').style.setProperty('--party-angle', `${360 * (total - remaining) / total}deg`);
     $$('.party-durations button').forEach(button => button.classList.toggle('active', Number(button.dataset.partyMin) === snapshot.minutes));
+    renderReadyGate();
   }
   function applyTimer(snapshot, sourceName = 'A friend') {
     if (!snapshot || snapshot.stamp <= lastTimerStamp || typeof chosen !== 'number') return;
@@ -319,6 +342,16 @@
   $('#partyReactions').innerHTML = REACTIONS.map(emoji => `<button type="button" data-reaction="${emoji}">${emoji}</button>`).join('');
   $('#partyReactions').onclick = event => { const button = event.target.closest('[data-reaction]'); if (!button) return; const emoji = button.dataset.reaction; actions.reaction?.send({ emoji }); floatReaction(emoji, prefs.name); addFeed({ system: true, text: `You sent ${emoji}` }); };
 
+  $('#start')?.addEventListener('click', event => {
+    if (!connected || applyingRemote || (typeof running === 'boolean' && running)) return;
+    const state = readinessState();
+    if (state.canStart) return;
+    event.preventDefault(); event.stopImmediatePropagation();
+    $('#partyReadyGate').textContent = state.text;
+    $('#partyReadyGate').classList.remove('ready', 'attention');
+    requestAnimationFrame(() => $('#partyReadyGate').classList.add('attention'));
+    addFeed({ system: true, text: `Timer waiting: ${state.text}` });
+  }, true);
   $('#start')?.addEventListener('click', () => setTimeout(() => { if (!connected || applyingRemote) return; const snapshot = currentTimerSnapshot(); snapshot.stamp = Date.now(); lastTimerStamp = snapshot.stamp; actions.timer?.send(snapshot); renderPartyTimer(snapshot); }, 90));
   $('#reset')?.addEventListener('click', () => setTimeout(() => { if (!connected || applyingRemote) return; const snapshot = currentTimerSnapshot(); snapshot.stamp = Date.now(); lastTimerStamp = snapshot.stamp; actions.timer?.send(snapshot); renderPartyTimer(snapshot); }, 60));
   ['claim', 'skip'].forEach(id => document.getElementById(id)?.addEventListener('click', () => { if (connected) { actions.complete?.send({ at: Date.now() }); floatReaction('🎉', prefs.name); addFeed({ system: true, text: 'Your focus quest is complete. The party cheered!' }); } }));

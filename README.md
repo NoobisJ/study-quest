@@ -10,7 +10,7 @@ The **Today** command center keeps the next useful action visible: resume the ac
 
 ## Study Party
 
-Choose **Study Party** to create or join an account-free room with a private invite code. Friends can share a mission, see who is present and ready, synchronize the focus timer, exchange short messages and reactions, and celebrate completed sessions together. Party data travels directly between browsers over encrypted WebRTC; public Nostr relays help peers discover each other but do not store the party conversation. Rooms are temporary, work best with small groups, and require an internet connection. Solo Study Quest continues to work offline.
+Choose **Study Party** to create or join an account-free room with a private invite code. Friends can share a mission, see who is present and ready, synchronize the focus timer, exchange short messages and reactions, and celebrate completed sessions together. At least two people must be connected, and every person in the room must mark themselves ready before the timer can start or resume. Party data travels directly between browsers over encrypted WebRTC; public Nostr relays help peers discover each other but do not store the party conversation. Rooms are temporary, work best with small groups, and require an internet connection. Solo Study Quest continues to work offline.
 
 On the hosted app, **Invite friends** offers a secure join link and room code. In the portable HTML app, local `file://` links cannot work on another device, so the invite panel safely copies only the private room code; friends open their own Study Quest copy and enter that code under **Join friends**.
 

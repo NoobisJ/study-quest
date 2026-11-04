@@ -1,4 +1,4 @@
-const CACHE_NAME = 'study-quest-shell-v11';
+const CACHE_NAME = 'study-quest-shell-v12';
 const SHELL_FILES = [
   './',
   './index.html',
