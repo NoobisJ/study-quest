@@ -4,7 +4,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const projectDir = dirname(fileURLToPath(import.meta.url));
-const sourceDir = existsSync(resolve(projectDir, 'dist', 'index.html')) ? resolve(projectDir, 'dist') : projectDir;
+const sourceDir = existsSync(resolve(projectDir, 'index.html')) ? projectDir : resolve(projectDir, 'dist');
 const outputPath = join(sourceDir, 'Study-Quest-Portable.html');
 
 const mimeByExtension = {

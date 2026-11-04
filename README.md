@@ -1,6 +1,10 @@
 # Study Quest
 
-Study Quest turns schoolwork, projects, chores, and personal goals into customizable focus quests. It includes classes/realms, detailed mission cards, custom focus timers, light and dark modes, XP, rewards, Spotify focus music, and Moss the focus fox.
+Study Quest turns schoolwork, projects, chores, and personal goals into customizable focus quests. It includes a daily command center, flexible goals, seven-day momentum, distraction-free focus mode, classes/realms, detailed mission cards, custom focus timers, light and dark modes, XP, rewards, Spotify focus music, and Moss the focus fox.
+
+## Start with Today
+
+The **Today** command center keeps the next useful action visible: resume the active mission, begin a focus sprint, or forge something new. Set a daily session and minute goal, then use the seven-day momentum view to build consistency without punishing broken streaks. **Focus shield** temporarily hides the deeper game systems while a timer is running; everything returns when you leave focus mode.
 
 ## Spotify focus music
 
