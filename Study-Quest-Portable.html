@@ -126,6 +126,8 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
 /* Study Party — account-free peer-to-peer focus rooms */
 .party-room-head{padding-right:72px!important}
 @media(max-width:560px){.party-room-head{padding-right:15px!important}}
+.party-invite-sheet{position:absolute;inset:0;z-index:20;background:#0a1c18c9;backdrop-filter:blur(10px);display:none;place-items:center;padding:18px}.party-invite-sheet.show{display:grid;animation:partyFade .18s ease}.party-invite-card{width:min(440px,100%);background:var(--surface);border:1px solid color-mix(in srgb,var(--border) 60%,white);border-radius:25px;padding:28px;box-shadow:0 30px 90px #0008;position:relative;text-align:center;animation:partyRise .22s ease}.party-invite-close{position:absolute;right:13px;top:13px;width:34px;height:34px;border:0;border-radius:50%;background:var(--surface-2);color:var(--text);font-size:18px}.party-invite-icon{width:54px;height:54px;margin:0 auto 12px;border-radius:18px;display:grid;place-items:center;background:var(--realm-soft);color:var(--realm-accent);font-size:24px}.party-invite-card h3{font:29px Georgia,serif;margin:6px 0 8px}.party-invite-card>p{font-size:10px;line-height:1.55;color:var(--text-soft);margin:0 auto 16px;max-width:350px}.party-code-copy{width:100%;border:1px solid color-mix(in srgb,var(--realm-accent) 30%,var(--border));border-radius:15px;background:color-mix(in srgb,var(--realm-soft) 55%,var(--surface-3));padding:11px 12px;display:grid;grid-template-columns:1fr auto;align-items:center;text-align:left;color:var(--text)}.party-code-copy span{grid-column:1/-1;font-size:7px;text-transform:uppercase;letter-spacing:.14em;color:var(--text-soft);font-weight:900}.party-code-copy strong{font:900 18px ui-monospace,monospace;letter-spacing:.1em;margin-top:3px}.party-code-copy i{font-style:normal;font-size:8px;font-weight:900;color:var(--realm-accent);background:var(--surface-3);border-radius:8px;padding:6px 8px}.party-link-copy,.party-native-share{width:100%;border:0;border-radius:12px;padding:11px;margin-top:8px;font-size:9px;font-weight:900}.party-link-copy{background:var(--realm-accent);color:white}.party-native-share{background:var(--surface-2);color:var(--text)}.party-invite-status{min-height:18px;margin-top:8px;font-size:8px;color:var(--realm-accent);font-weight:800}.party-invite-status.error{color:#c45f52}.party-invite-card>small{display:block;font-size:7px;line-height:1.45;color:var(--text-soft);margin-top:5px}
+@media(max-width:560px){.party-invite-sheet{padding:8px}.party-invite-card{padding:24px 18px;border-radius:19px}.party-invite-card h3{font-size:25px}.party-code-copy strong{font-size:16px}}
 .party-app{border:1px solid color-mix(in srgb,var(--realm-accent) 26%,var(--border));background:color-mix(in srgb,var(--surface) 85%,var(--realm-soft));color:var(--text);border-radius:999px;padding:8px 11px;display:flex;align-items:center;gap:6px;font-size:10px;font-weight:900;box-shadow:0 7px 20px #17352d0d;transition:.2s}.party-app:hover{transform:translateY(-1px);border-color:var(--realm-accent)}.party-app i{font-style:normal;background:var(--realm-accent);color:white;min-width:18px;height:18px;border-radius:99px;display:grid;place-items:center;font-size:8px}.party-app.live .party-spark{color:#e6a84b;animation:partySpark 1.4s ease infinite}.sq-party-nav{border:0!important;text-decoration:none;background:transparent!important;color:var(--text-soft)!important;border-radius:13px!important;padding:8px 12px!important;font-size:11px!important;font-weight:850!important;display:flex!important;align-items:center!important;gap:6px!important;white-space:nowrap}.sq-party-nav:hover{background:var(--surface-2)!important;color:var(--text)!important}
 .party-modal{position:fixed;inset:0;z-index:220;background:#0a1c18d9;backdrop-filter:blur(13px);display:none;place-items:center;padding:14px}.party-modal.show{display:grid;animation:partyFade .2s ease}.party-shell{width:min(1050px,100%);height:min(760px,95vh);background:var(--surface);color:var(--text);border:1px solid #ffffff25;border-radius:30px;box-shadow:0 40px 130px #0009;position:relative;overflow:hidden}.party-close{position:absolute;right:16px;top:16px;z-index:8;width:38px;height:38px;border:0;border-radius:50%;background:color-mix(in srgb,var(--surface-2) 88%,transparent);color:var(--text);font-size:20px;backdrop-filter:blur(10px)}.party-lobby,.party-room,.party-loading,.party-error{display:none;height:100%}.party-lobby.active{display:grid;grid-template-columns:.92fr 1.08fr}.party-room.active{display:block;overflow:auto}.party-loading.active,.party-error.active{display:grid;place-content:center;text-align:center;padding:30px}
 .party-hero{padding:54px 42px;background:radial-gradient(circle at 72% 18%,#ffe98a42 0 5%,transparent 23%),linear-gradient(155deg,#173c32,#315e4d 58%,#638763);color:#fff;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}.party-hero:before,.party-hero:after{content:"";position:absolute;border:1px solid #ffffff18;border-radius:50%}.party-hero:before{width:310px;height:310px;right:-160px;top:-90px}.party-hero:after{width:230px;height:230px;left:-130px;bottom:-90px}.party-orbit{width:112px;height:112px;border-radius:36px;background:#ffffff12;border:1px solid #ffffff20;display:grid;place-items:center;position:relative;margin-bottom:24px;box-shadow:inset 0 0 50px #ffffff0b}.party-orbit span{font-size:56px;filter:drop-shadow(0 12px 14px #0004);animation:partyFloat 3s ease-in-out infinite}.party-orbit i,.party-orbit b{position:absolute;font-style:normal;color:#f6d778}.party-orbit i{right:-15px;top:12px;font-size:24px}.party-orbit b{left:-18px;bottom:8px;font-size:12px}.party-kicker{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#bfe0c9;font-weight:900}.party-hero h2{font:clamp(35px,5vw,51px)/1 Georgia,serif;margin:8px 0 14px}.party-hero>p{color:#d9e8df;font-size:13px;line-height:1.6;max-width:410px}.party-benefits{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}.party-benefits span{background:#ffffff0e;border:1px solid #ffffff1e;border-radius:99px;padding:7px 10px;font-size:9px;color:#edf5ef;font-weight:750}.party-benefits b{color:#f6d778;margin-right:4px}
@@ -1173,6 +1175,20 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
       </div>
       <div class="party-loading" id="partyLoading"><div class="party-loader"><i></i><i></i><i></i></div><h3>Opening the trail…</h3><p id="partyLoadingText">Connecting your browser securely.</p><button id="cancelParty" type="button">Cancel</button></div>
       <div class="party-error" id="partyError"><span>☁</span><h3>We couldn’t open the party.</h3><p id="partyErrorText">Check your connection and try again.</p><button type="button" id="partyRetry">Back to setup</button></div>
+      <div class="party-invite-sheet" id="partyInviteSheet" aria-hidden="true">
+        <div class="party-invite-card">
+          <button class="party-invite-close" id="closePartyInvite" type="button" aria-label="Close invite panel">×</button>
+          <div class="party-invite-icon">↗</div>
+          <div class="party-kicker">Bring your people in</div>
+          <h3>Invite friends to the party.</h3>
+          <p id="partyInviteHelp">Send the private link below. Anyone with it can enter this temporary room.</p>
+          <button class="party-code-copy" id="copyPartyCode" type="button"><span>Private room code</span><strong id="partyInviteCode"></strong><i>Copy</i></button>
+          <button class="party-link-copy" id="copyPartyLink" type="button">Copy secure invite link</button>
+          <button class="party-native-share" id="nativePartyShare" type="button">Share with another app</button>
+          <div class="party-invite-status" id="partyInviteStatus" role="status" aria-live="polite"></div>
+          <small>Only invite people you trust. The room disappears when everyone leaves.</small>
+        </div>
+      </div>
     </section>`;
   document.body.appendChild(modal);
 
@@ -1188,7 +1204,7 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
     if (connected) showView('partyRoom'); else if (!joining) showView('partyLobby');
     if (tab) switchTab(tab);
   }
-  function closeParty() { modal.classList.remove('show'); document.body.classList.remove('sq-modal-open'); }
+  function closeParty() { closeInvitePanel(); modal.classList.remove('show'); document.body.classList.remove('sq-modal-open'); }
   function switchTab(tab) {
     $$('.party-tabs button').forEach(button => button.classList.toggle('active', button.dataset.partyTab === tab));
     $$('.party-pane').forEach(pane => pane.classList.toggle('active', pane.dataset.partyPane === tab));
@@ -1220,15 +1236,46 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
     bubble.style.setProperty('--x', `${35 + Math.random() * 30}vw`); bubble.style.setProperty('--drift', `${-50 + Math.random() * 100}px`);
     reactionLayer.appendChild(bubble); setTimeout(() => bubble.remove(), 2600);
   }
+  const isPortable = () => location.protocol === 'file:';
   function inviteUrl() {
+    if (isPortable()) return '';
     const url = new URL(location.href); url.hash = `party=${roomCode}`; return url.href;
   }
-  async function shareInvite() {
-    const text = `Join my Study Party! Room code: ${displayCode(roomCode)}`;
+  async function copyText(text) {
     try {
-      if (navigator.share) await navigator.share({ title: 'Join my Study Party', text, url: inviteUrl() });
-      else { await navigator.clipboard.writeText(`${text}\n${inviteUrl()}`); toast?.('Party invite copied ✓'); }
-    } catch (error) { if (error?.name !== 'AbortError') await navigator.clipboard?.writeText(`${text}\n${inviteUrl()}`); }
+      if (navigator.clipboard?.writeText && window.isSecureContext) { await navigator.clipboard.writeText(text); return true; }
+    } catch {}
+    const field = document.createElement('textarea'); field.value = text; field.setAttribute('readonly', ''); field.style.cssText = 'position:fixed;left:-9999px;top:0'; document.body.appendChild(field); field.select();
+    let copied = false; try { copied = document.execCommand('copy'); } catch {} field.remove(); return copied;
+  }
+  function setInviteStatus(message, success = true) {
+    const status = $('#partyInviteStatus'); status.textContent = message; status.classList.toggle('error', !success);
+  }
+  function openInvitePanel() {
+    const portable = isPortable(), url = inviteUrl();
+    $('#partyInviteCode').textContent = displayCode(roomCode);
+    $('#partyInviteHelp').textContent = portable ? 'Because this is the portable HTML app, your friend should open their own Study Quest copy and enter this room code.' : 'Send the private link below. Anyone with it can enter this temporary room.';
+    $('#copyPartyLink').hidden = portable;
+    $('#nativePartyShare').hidden = portable || !navigator.share;
+    $('#partyInviteStatus').textContent = '';
+    $('#partyInviteSheet').classList.add('show'); $('#partyInviteSheet').setAttribute('aria-hidden', 'false');
+    setTimeout(() => $('#copyPartyCode').focus(), 30);
+  }
+  function closeInvitePanel() { $('#partyInviteSheet').classList.remove('show'); $('#partyInviteSheet').setAttribute('aria-hidden', 'true'); }
+  async function copyInviteCode() {
+    const copied = await copyText(displayCode(roomCode));
+    setInviteStatus(copied ? 'Room code copied. Your friend can paste it into Join friends.' : `Copy this code: ${displayCode(roomCode)}`, copied);
+    if (!$('#partyInviteSheet').classList.contains('show')) { if (copied) toast?.('Room code copied ✓'); else openInvitePanel(); }
+  }
+  async function copyInviteLink() {
+    const url = inviteUrl(); if (!url) return copyInviteCode();
+    const copied = await copyText(`Join my Study Party!\n${url}\nRoom code: ${displayCode(roomCode)}`);
+    setInviteStatus(copied ? 'Secure invite link copied.' : 'Copying was blocked. Use the room code above.', copied);
+  }
+  async function nativeShareInvite() {
+    if (isPortable() || !navigator.share) return;
+    try { await navigator.share({ title: 'Join my Study Party', text: `Join my Study Party! Room code: ${displayCode(roomCode)}`, url: inviteUrl() }); setInviteStatus('Invite opened in your share menu.'); }
+    catch (error) { if (error?.name !== 'AbortError') setInviteStatus('Sharing was unavailable. Copy the invite link instead.', false); }
   }
   function currentTimerSnapshot() {
     const isRunning = typeof running === 'boolean' && running;
@@ -1307,8 +1354,13 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
   $('#cancelParty').onclick = () => { joining = false; connectAttempt++; showView('partyLobby'); };
   $('#partyRetry').onclick = () => showView('partyLobby');
   $('#leaveParty').onclick = leaveParty;
-  $('#shareParty').onclick = shareInvite;
-  $('#copyRoomCode').onclick = async () => { await navigator.clipboard?.writeText(displayCode(roomCode)); toast?.('Room code copied ✓'); };
+  $('#shareParty').onclick = openInvitePanel;
+  $('#closePartyInvite').onclick = closeInvitePanel;
+  $('#copyPartyCode').onclick = copyInviteCode;
+  $('#copyPartyLink').onclick = copyInviteLink;
+  $('#nativePartyShare').onclick = nativeShareInvite;
+  $('#partyInviteSheet').addEventListener('click', event => { if (event.target === $('#partyInviteSheet')) closeInvitePanel(); });
+  $('#copyRoomCode').onclick = copyInviteCode;
   $('#savePartyMission').onclick = () => { const text = $('#partyMission').value.trim(); if (!text) return; sharedMission = text; actions.mission?.send({ text }); $('#partyMissionBy').textContent = `Set by ${prefs.name} · synced for everyone`; $('#quest').value = text; $('#saveQuest')?.click(); addFeed({ system: true, text: 'You set the party mission.' }); };
   $('#toggleReady').onclick = () => { const current = members.get(selfId) || selfMember(); current.ready = !current.ready; members.set(selfId, current); actions.ready?.send(current.ready); $('#toggleReady').textContent = current.ready ? 'Ready ✓' : 'I’m ready'; $('#toggleReady').classList.toggle('ready', current.ready); renderMembers(); };
   $('#partyStart').onclick = () => $('#start')?.click();
@@ -1324,7 +1376,7 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
   if (timerText) new MutationObserver(() => { if (connected) renderPartyTimer(currentTimerSnapshot()); }).observe(timerText, { childList: true, subtree: true });
   setInterval(() => { if (connected) { renderPartyTimer(currentTimerSnapshot()); $$('#partyFeed time').forEach((node, index) => { if (messages[index]) node.textContent = relativeTime(messages[index].at); }); } }, 1000);
   addEventListener('beforeunload', () => room?.leave?.());
-  document.addEventListener('keydown', event => { if (event.key === 'Escape' && modal.classList.contains('show')) closeParty(); });
+  document.addEventListener('keydown', event => { if (event.key !== 'Escape' || !modal.classList.contains('show')) return; if ($('#partyInviteSheet').classList.contains('show')) closeInvitePanel(); else closeParty(); });
 
   $('#partyName').value = prefs.name;
   renderAvatarPicker(); renderMembers();

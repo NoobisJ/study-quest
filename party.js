@@ -125,6 +125,20 @@
       </div>
       <div class="party-loading" id="partyLoading"><div class="party-loader"><i></i><i></i><i></i></div><h3>Opening the trail…</h3><p id="partyLoadingText">Connecting your browser securely.</p><button id="cancelParty" type="button">Cancel</button></div>
       <div class="party-error" id="partyError"><span>☁</span><h3>We couldn’t open the party.</h3><p id="partyErrorText">Check your connection and try again.</p><button type="button" id="partyRetry">Back to setup</button></div>
+      <div class="party-invite-sheet" id="partyInviteSheet" aria-hidden="true">
+        <div class="party-invite-card">
+          <button class="party-invite-close" id="closePartyInvite" type="button" aria-label="Close invite panel">×</button>
+          <div class="party-invite-icon">↗</div>
+          <div class="party-kicker">Bring your people in</div>
+          <h3>Invite friends to the party.</h3>
+          <p id="partyInviteHelp">Send the private link below. Anyone with it can enter this temporary room.</p>
+          <button class="party-code-copy" id="copyPartyCode" type="button"><span>Private room code</span><strong id="partyInviteCode"></strong><i>Copy</i></button>
+          <button class="party-link-copy" id="copyPartyLink" type="button">Copy secure invite link</button>
+          <button class="party-native-share" id="nativePartyShare" type="button">Share with another app</button>
+          <div class="party-invite-status" id="partyInviteStatus" role="status" aria-live="polite"></div>
+          <small>Only invite people you trust. The room disappears when everyone leaves.</small>
+        </div>
+      </div>
     </section>`;
   document.body.appendChild(modal);
 
@@ -140,7 +154,7 @@
     if (connected) showView('partyRoom'); else if (!joining) showView('partyLobby');
     if (tab) switchTab(tab);
   }
-  function closeParty() { modal.classList.remove('show'); document.body.classList.remove('sq-modal-open'); }
+  function closeParty() { closeInvitePanel(); modal.classList.remove('show'); document.body.classList.remove('sq-modal-open'); }
   function switchTab(tab) {
     $$('.party-tabs button').forEach(button => button.classList.toggle('active', button.dataset.partyTab === tab));
     $$('.party-pane').forEach(pane => pane.classList.toggle('active', pane.dataset.partyPane === tab));
@@ -172,15 +186,46 @@
     bubble.style.setProperty('--x', `${35 + Math.random() * 30}vw`); bubble.style.setProperty('--drift', `${-50 + Math.random() * 100}px`);
     reactionLayer.appendChild(bubble); setTimeout(() => bubble.remove(), 2600);
   }
+  const isPortable = () => location.protocol === 'file:';
   function inviteUrl() {
+    if (isPortable()) return '';
     const url = new URL(location.href); url.hash = `party=${roomCode}`; return url.href;
   }
-  async function shareInvite() {
-    const text = `Join my Study Party! Room code: ${displayCode(roomCode)}`;
+  async function copyText(text) {
     try {
-      if (navigator.share) await navigator.share({ title: 'Join my Study Party', text, url: inviteUrl() });
-      else { await navigator.clipboard.writeText(`${text}\n${inviteUrl()}`); toast?.('Party invite copied ✓'); }
-    } catch (error) { if (error?.name !== 'AbortError') await navigator.clipboard?.writeText(`${text}\n${inviteUrl()}`); }
+      if (navigator.clipboard?.writeText && window.isSecureContext) { await navigator.clipboard.writeText(text); return true; }
+    } catch {}
+    const field = document.createElement('textarea'); field.value = text; field.setAttribute('readonly', ''); field.style.cssText = 'position:fixed;left:-9999px;top:0'; document.body.appendChild(field); field.select();
+    let copied = false; try { copied = document.execCommand('copy'); } catch {} field.remove(); return copied;
+  }
+  function setInviteStatus(message, success = true) {
+    const status = $('#partyInviteStatus'); status.textContent = message; status.classList.toggle('error', !success);
+  }
+  function openInvitePanel() {
+    const portable = isPortable(), url = inviteUrl();
+    $('#partyInviteCode').textContent = displayCode(roomCode);
+    $('#partyInviteHelp').textContent = portable ? 'Because this is the portable HTML app, your friend should open their own Study Quest copy and enter this room code.' : 'Send the private link below. Anyone with it can enter this temporary room.';
+    $('#copyPartyLink').hidden = portable;
+    $('#nativePartyShare').hidden = portable || !navigator.share;
+    $('#partyInviteStatus').textContent = '';
+    $('#partyInviteSheet').classList.add('show'); $('#partyInviteSheet').setAttribute('aria-hidden', 'false');
+    setTimeout(() => $('#copyPartyCode').focus(), 30);
+  }
+  function closeInvitePanel() { $('#partyInviteSheet').classList.remove('show'); $('#partyInviteSheet').setAttribute('aria-hidden', 'true'); }
+  async function copyInviteCode() {
+    const copied = await copyText(displayCode(roomCode));
+    setInviteStatus(copied ? 'Room code copied. Your friend can paste it into Join friends.' : `Copy this code: ${displayCode(roomCode)}`, copied);
+    if (!$('#partyInviteSheet').classList.contains('show')) { if (copied) toast?.('Room code copied ✓'); else openInvitePanel(); }
+  }
+  async function copyInviteLink() {
+    const url = inviteUrl(); if (!url) return copyInviteCode();
+    const copied = await copyText(`Join my Study Party!\n${url}\nRoom code: ${displayCode(roomCode)}`);
+    setInviteStatus(copied ? 'Secure invite link copied.' : 'Copying was blocked. Use the room code above.', copied);
+  }
+  async function nativeShareInvite() {
+    if (isPortable() || !navigator.share) return;
+    try { await navigator.share({ title: 'Join my Study Party', text: `Join my Study Party! Room code: ${displayCode(roomCode)}`, url: inviteUrl() }); setInviteStatus('Invite opened in your share menu.'); }
+    catch (error) { if (error?.name !== 'AbortError') setInviteStatus('Sharing was unavailable. Copy the invite link instead.', false); }
   }
   function currentTimerSnapshot() {
     const isRunning = typeof running === 'boolean' && running;
@@ -259,8 +304,13 @@
   $('#cancelParty').onclick = () => { joining = false; connectAttempt++; showView('partyLobby'); };
   $('#partyRetry').onclick = () => showView('partyLobby');
   $('#leaveParty').onclick = leaveParty;
-  $('#shareParty').onclick = shareInvite;
-  $('#copyRoomCode').onclick = async () => { await navigator.clipboard?.writeText(displayCode(roomCode)); toast?.('Room code copied ✓'); };
+  $('#shareParty').onclick = openInvitePanel;
+  $('#closePartyInvite').onclick = closeInvitePanel;
+  $('#copyPartyCode').onclick = copyInviteCode;
+  $('#copyPartyLink').onclick = copyInviteLink;
+  $('#nativePartyShare').onclick = nativeShareInvite;
+  $('#partyInviteSheet').addEventListener('click', event => { if (event.target === $('#partyInviteSheet')) closeInvitePanel(); });
+  $('#copyRoomCode').onclick = copyInviteCode;
   $('#savePartyMission').onclick = () => { const text = $('#partyMission').value.trim(); if (!text) return; sharedMission = text; actions.mission?.send({ text }); $('#partyMissionBy').textContent = `Set by ${prefs.name} · synced for everyone`; $('#quest').value = text; $('#saveQuest')?.click(); addFeed({ system: true, text: 'You set the party mission.' }); };
   $('#toggleReady').onclick = () => { const current = members.get(selfId) || selfMember(); current.ready = !current.ready; members.set(selfId, current); actions.ready?.send(current.ready); $('#toggleReady').textContent = current.ready ? 'Ready ✓' : 'I’m ready'; $('#toggleReady').classList.toggle('ready', current.ready); renderMembers(); };
   $('#partyStart').onclick = () => $('#start')?.click();
@@ -276,7 +326,7 @@
   if (timerText) new MutationObserver(() => { if (connected) renderPartyTimer(currentTimerSnapshot()); }).observe(timerText, { childList: true, subtree: true });
   setInterval(() => { if (connected) { renderPartyTimer(currentTimerSnapshot()); $$('#partyFeed time').forEach((node, index) => { if (messages[index]) node.textContent = relativeTime(messages[index].at); }); } }, 1000);
   addEventListener('beforeunload', () => room?.leave?.());
-  document.addEventListener('keydown', event => { if (event.key === 'Escape' && modal.classList.contains('show')) closeParty(); });
+  document.addEventListener('keydown', event => { if (event.key !== 'Escape' || !modal.classList.contains('show')) return; if ($('#partyInviteSheet').classList.contains('show')) closeInvitePanel(); else closeParty(); });
 
   $('#partyName').value = prefs.name;
   renderAvatarPicker(); renderMembers();
