@@ -1,4 +1,4 @@
-const CACHE_NAME = 'study-quest-shell-v9';
+const CACHE_NAME = 'study-quest-shell-v10';
 const SHELL_FILES = [
   './',
   './index.html',
@@ -14,6 +14,8 @@ const SHELL_FILES = [
   './spotify.js',
   './v4.css',
   './v4.js',
+  './party.css',
+  './party.js',
   './Study-Quest-Portable.html',
   './manifest.webmanifest',
   './icons/icon-192.png',

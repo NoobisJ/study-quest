@@ -8,6 +8,10 @@ The app opens as a clean, universal quest space with no preloaded class, teacher
 
 The **Today** command center keeps the next useful action visible: resume the active mission, begin a focus sprint, or forge something new. Set a daily session and minute goal, then use the seven-day momentum view to build consistency without punishing broken streaks. **Focus shield** temporarily hides the deeper game systems while a timer is running; everything returns when you leave focus mode.
 
+## Study Party
+
+Choose **Study Party** to create or join an account-free room with a private invite code. Friends can share a mission, see who is present and ready, synchronize the focus timer, exchange short messages and reactions, and celebrate completed sessions together. Party data travels directly between browsers over encrypted WebRTC; public Nostr relays help peers discover each other but do not store the party conversation. Rooms are temporary, work best with small groups, and require an internet connection. Solo Study Quest continues to work offline.
+
 ## Spotify focus music
 
 Open **Spotify focus music** and paste a Spotify share link for a playlist, album, track, artist, show, or episode. Study Quest saves the link in this browser and adds Spotify's accessible embedded player beside the focus timer. Spotify playback requires an internet connection; the rest of Study Quest remains available offline.
