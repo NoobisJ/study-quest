@@ -38,6 +38,8 @@
   let leaderId = '';
   let isHost = false;
   let lastTimerStamp = 0;
+  let pauseRequest = null;
+  let consensusPauseAuthorized = false;
   const members = new Map();
   const messages = [];
 
@@ -106,15 +108,19 @@
             <section class="party-timer-card">
               <div class="party-timer-ring" id="partyTimerRing"><div><strong id="partyTime">25:00</strong><span id="partyTimerMode">ready together</span></div></div>
               <div class="party-timer-controls">
-                <h3>One timer. One team.</h3><p>Everyone must be ready before the shared timer can start. Anyone can pause it.</p>
+                <h3>One timer. One team.</h3><p>Everyone must be ready to start, and everyone must approve before the timer pauses.</p>
                 <div class="party-durations"><button data-party-min="15">15m</button><button class="active" data-party-min="25">25m</button><button data-party-min="45">45m</button><button data-party-min="60">60m</button></div>
                 <button class="party-focus-button" id="partyStart" type="button">▶ Start together</button>
                 <div class="party-ready-gate" id="partyReadyGate" role="status" aria-live="polite"></div>
+                <div class="party-pause-vote" id="partyPauseVote" hidden>
+                  <p id="partyPausePrompt"></p><strong id="partyPauseCount"></strong>
+                  <div><button id="allowPartyPause" type="button">Allow pause</button><button id="declinePartyPause" type="button">Keep focusing</button></div>
+                </div>
               </div>
             </section>
             <section class="party-chat-card">
               <div class="party-card-label">Camp chat</div><div class="party-feed" id="partyFeed" aria-live="polite"></div>
-              <form id="partyChatForm"><input id="partyMessage" maxlength="160" placeholder="Send a quick message…" aria-label="Party message"><button>Send</button></form>
+              <form id="partyChatForm"><textarea id="partyMessage" rows="1" maxlength="500" placeholder="Send a message…" aria-label="Party message"></textarea><div><span id="partyChatCount">0/500</span><button>Send</button></div></form>
             </section>
           </main>
           <aside class="party-side-column">
@@ -140,8 +146,24 @@
           <small>Only invite people you trust. The room disappears when everyone leaves.</small>
         </div>
       </div>
+      <div class="party-resize-hint" title="Drag this corner to resize the Study Party window" aria-hidden="true"><i></i><i></i><i></i></div>
     </section>`;
   document.body.appendChild(modal);
+
+  const partyShell = $('.party-shell');
+  const savedWindowSize = safeParse(localStorage.getItem('studyQuest.partyWindow.v1'), null);
+  if (innerWidth > 850 && savedWindowSize?.width && savedWindowSize?.height) {
+    partyShell.style.width = `${savedWindowSize.width}px`;
+    partyShell.style.height = `${savedWindowSize.height}px`;
+  }
+  if ('ResizeObserver' in window) {
+    let sizeSaveTimer;
+    new ResizeObserver(([entry]) => {
+      if (!modal.classList.contains('show') || innerWidth <= 850) return;
+      clearTimeout(sizeSaveTimer);
+      sizeSaveTimer = setTimeout(() => localStorage.setItem('studyQuest.partyWindow.v1', JSON.stringify({ width: Math.round(entry.contentRect.width), height: Math.round(entry.contentRect.height) })), 180);
+    }).observe(partyShell);
+  }
 
   const reactionLayer = document.createElement('div');
   reactionLayer.className = 'party-reaction-layer';
@@ -188,12 +210,80 @@
     $('#partyReadyGate').classList.toggle('ready', state.canStart && !isTimerRunning);
     $('#partyStart').disabled = !isTimerRunning && !state.canStart;
   }
+  function memberName(memberId) {
+    if (memberId === selfId) return prefs.name || 'You';
+    return members.get(memberId)?.name || 'A friend';
+  }
+  function renderPauseVote() {
+    const panel = $('#partyPauseVote');
+    if (!pauseRequest || !(typeof running === 'boolean' && running)) { panel.hidden = true; return; }
+    const pending = pauseRequest.participants.filter(id => !pauseRequest.approvals.has(id));
+    const selfApproved = pauseRequest.approvals.has(selfId);
+    if (pauseRequest.requesterId === selfId) $('#partyPausePrompt').textContent = pending.length ? `Pause requested · waiting for ${pending.map(memberName).join(' and ')}.` : 'Everyone approved. Pausing together…';
+    else if (selfApproved) $('#partyPausePrompt').textContent = pending.length ? `You allowed the pause · waiting for ${pending.map(memberName).join(' and ')}.` : 'Everyone approved. Pausing together…';
+    else $('#partyPausePrompt').textContent = `${pauseRequest.requesterName} wants to pause for everyone.`;
+    $('#partyPauseCount').textContent = `${pauseRequest.approvals.size}/${pauseRequest.participants.length} approved`;
+    $('#allowPartyPause').hidden = selfApproved;
+    $('#declinePartyPause').textContent = pauseRequest.requesterId === selfId ? 'Cancel request' : 'Keep focusing';
+    panel.hidden = false;
+  }
+  function clearPauseRequest(message = '') {
+    pauseRequest = null; renderPauseVote();
+    if (message) addFeed({ system: true, text: message });
+  }
+  function beginPauseRequest() {
+    if (pauseRequest || !(typeof running === 'boolean' && running)) { renderPauseVote(); return; }
+    if (!modal.classList.contains('show')) openParty();
+    const participants = partyMemberList().map(member => member.id);
+    pauseRequest = { id: `${selfId}-${Date.now()}`, requesterId: selfId, requesterName: prefs.name || 'Trail Friend', participants, approvals: new Set([selfId]) };
+    actions.pause?.send({ type: 'request', id: pauseRequest.id, requesterName: pauseRequest.requesterName, participants });
+    renderPauseVote(); addFeed({ system: true, text: 'You asked the party to pause. The timer keeps running until everyone agrees.' });
+  }
+  function maybeCompletePauseVote() {
+    if (!pauseRequest || pauseRequest.requesterId !== selfId || !pauseRequest.participants.every(id => pauseRequest.approvals.has(id))) return;
+    const requestId = pauseRequest.id;
+    actions.pause?.send({ type: 'approved', id: requestId });
+    clearPauseRequest('Everyone approved the pause.');
+    consensusPauseAuthorized = true;
+    $('#start')?.click();
+    setTimeout(() => { consensusPauseAuthorized = false; }, 250);
+  }
+  function voteOnPause(allow) {
+    if (!pauseRequest) return;
+    if (!allow) {
+      actions.pause?.send({ type: 'decline', id: pauseRequest.id });
+      clearPauseRequest(pauseRequest.requesterId === selfId ? 'You canceled the pause request.' : 'You chose to keep the focus timer running.');
+      return;
+    }
+    pauseRequest.approvals.add(selfId);
+    actions.pause?.send({ type: 'vote', id: pauseRequest.id, allow: true });
+    renderPauseVote(); maybeCompletePauseVote();
+  }
+  function receivePauseAction(data, peerId) {
+    if (!data || !data.type) return;
+    if (data.type === 'request') {
+      if (!(typeof running === 'boolean' && running)) return;
+      const incomingId = String(data.id || '');
+      if (pauseRequest && pauseRequest.id !== incomingId && pauseRequest.id.localeCompare(incomingId) < 0) return;
+      if (pauseRequest?.id === incomingId) return;
+      const participants = [...new Set([...(Array.isArray(data.participants) ? data.participants : []), peerId, selfId])];
+      pauseRequest = { id: String(data.id || ''), requesterId: peerId, requesterName: members.get(peerId)?.name || String(data.requesterName || 'A friend'), participants, approvals: new Set([peerId]) };
+      if (!modal.classList.contains('show')) openParty();
+      renderPauseVote(); addFeed({ system: true, text: `${pauseRequest.requesterName} asked everyone to approve a pause.` });
+      return;
+    }
+    if (!pauseRequest || data.id !== pauseRequest.id) return;
+    if (data.type === 'vote' && data.allow) { pauseRequest.approvals.add(peerId); renderPauseVote(); maybeCompletePauseVote(); }
+    if (data.type === 'decline') clearPauseRequest(`${members.get(peerId)?.name || 'A friend'} chose to keep focusing.`);
+    if (data.type === 'approved') clearPauseRequest('Everyone approved the pause.');
+  }
   function renderMembers() {
     const list = partyMemberList();
     $('#partyCount').textContent = list.length;
     $('#partyMemberCount').textContent = `${list.length} adventurer${list.length === 1 ? '' : 's'}`;
     $('#partyMembers').innerHTML = list.map(member => `<article class="party-member ${member.ready ? 'ready' : ''}"><div class="party-member-avatar" style="--member:${esc(member.color || COLORS[0])}">${esc(member.avatar || '🧭')}<i></i></div><div><strong>${esc(member.name)}${member.self ? ' <small>you</small>' : ''}</strong><span>${member.ready ? 'Ready to focus' : 'At the camp'}</span></div><b>${member.ready ? '✓' : '·'}</b></article>`).join('');
     renderReadyGate();
+    renderPauseVote();
   }
   function addFeed(entry) {
     messages.push({ at: Date.now(), ...entry });
@@ -262,6 +352,7 @@
     const total = Math.max(60, snapshot.minutes * 60); $('#partyTimerRing').style.setProperty('--party-angle', `${360 * (total - remaining) / total}deg`);
     $$('.party-durations button').forEach(button => button.classList.toggle('active', Number(button.dataset.partyMin) === snapshot.minutes));
     renderReadyGate();
+    renderPauseVote();
   }
   function applyTimer(snapshot, sourceName = 'A friend') {
     if (!snapshot || snapshot.stamp <= lastTimerStamp || typeof chosen !== 'number') return;
@@ -273,7 +364,7 @@
       $$('.preset').forEach(button => button.classList.toggle('active', Number(button.dataset.min) === chosen));
       drawClock();
       if (snapshot.status === 'running') $('#start')?.click();
-      else { $('#start').textContent = snapshot.status === 'paused' ? 'Resume focus quest' : 'Begin focus quest'; $('#modeLabel').textContent = snapshot.status === 'paused' ? 'paused' : 'ready'; }
+      else { pauseRequest = null; $('#start').textContent = snapshot.status === 'paused' ? 'Resume focus quest' : 'Begin focus quest'; $('#modeLabel').textContent = snapshot.status === 'paused' ? 'paused' : 'ready'; }
       renderPartyTimer(snapshot); addFeed({ system: true, text: snapshot.status === 'running' ? `${sourceName} started the focus timer.` : snapshot.status === 'paused' ? `${sourceName} paused the timer.` : `${sourceName} changed the timer.` });
     } finally { setTimeout(() => { applyingRemote = false; }, 220); }
   }
@@ -293,17 +384,18 @@
       isHost = host;
       room = module.joinRoom({ appId: 'chatgpt.study-quest.party.v1', password: roomCode }, `study-quest-${roomCode}`, { onJoinError: ({ error }) => showConnectionError(error?.message || 'A peer connection could not be completed.') });
       leaderId = isHost ? selfId : '';
-      actions.hello = room.makeAction('sq-hello'); actions.snapshot = room.makeAction('sq-snapshot'); actions.mission = room.makeAction('sq-mission'); actions.timer = room.makeAction('sq-timer'); actions.ready = room.makeAction('sq-ready'); actions.reaction = room.makeAction('sq-reaction'); actions.chat = room.makeAction('sq-chat'); actions.complete = room.makeAction('sq-complete');
+      actions.hello = room.makeAction('sq-hello'); actions.snapshot = room.makeAction('sq-snapshot'); actions.mission = room.makeAction('sq-mission'); actions.timer = room.makeAction('sq-timer'); actions.ready = room.makeAction('sq-ready'); actions.pause = room.makeAction('sq-pause'); actions.reaction = room.makeAction('sq-reaction'); actions.chat = room.makeAction('sq-chat'); actions.complete = room.makeAction('sq-complete');
       actions.hello.onMessage = (member, { peerId }) => { members.set(peerId, { ...member, ready: Boolean(member.ready) }); if (member.host) leaderId = peerId; if (!leaderId) leaderId = [selfId, ...members.keys()].sort()[0]; isHost = leaderId === selfId; renderMembers(); syncSnapshot(peerId); };
       actions.snapshot.onMessage = (data, { peerId }) => { if (data.leaderId) leaderId = data.leaderId; if (leaderId && peerId !== leaderId) return; if (data.mission && !sharedMission) { sharedMission = data.mission; $('#partyMission').value = sharedMission; $('#partyMissionBy').textContent = `Shared by ${members.get(peerId)?.name || 'a party member'}.`; } if (data.timer) applyTimer(data.timer, members.get(peerId)?.name || 'A friend'); renderMembers(); };
       actions.mission.onMessage = (data, { peerId }) => { sharedMission = String(data.text || '').slice(0, 120); $('#partyMission').value = sharedMission; const member = members.get(peerId); $('#partyMissionBy').textContent = `Set by ${member?.name || 'a party member'} · synced for everyone`; addFeed({ system: true, text: `${member?.name || 'A friend'} set the party mission.` }); };
       actions.timer.onMessage = (snapshot, { peerId }) => applyTimer(snapshot, members.get(peerId)?.name || 'A friend');
       actions.ready.onMessage = (ready, { peerId }) => { const member = members.get(peerId) || {}; members.set(peerId, { ...member, ready: Boolean(ready) }); renderMembers(); };
+      actions.pause.onMessage = (data, { peerId }) => receivePauseAction(data, peerId);
       actions.reaction.onMessage = (data, { peerId }) => { const member = members.get(peerId); floatReaction(data.emoji, member?.name); addFeed({ system: true, text: `${member?.name || 'A friend'} sent ${data.emoji}` }); };
-      actions.chat.onMessage = (data, { peerId }) => { const member = members.get(peerId) || {}; addFeed({ name: member.name || 'Trail Friend', avatar: member.avatar, color: member.color, text: String(data.text || '').slice(0, 160) }); };
+      actions.chat.onMessage = (data, { peerId }) => { const member = members.get(peerId) || {}; addFeed({ name: member.name || 'Trail Friend', avatar: member.avatar, color: member.color, text: String(data.text || '').slice(0, 500) }); };
       actions.complete.onMessage = (_, { peerId }) => { const member = members.get(peerId); floatReaction('🎉', member?.name); addFeed({ system: true, text: `${member?.name || 'A friend'} completed a focus quest!` }); };
       room.onPeerJoin = peerId => { members.set(peerId, { name: 'Joining friend…', avatar: '🧭', color: COLORS[members.size % COLORS.length], ready: false, host: false }); actions.hello.send({ name: prefs.name, avatar: prefs.avatar, color: prefs.color, ready: false, host: isHost }, { target: peerId }); if (leaderId === selfId) setTimeout(() => syncSnapshot(peerId), 120); renderMembers(); $('#partyStatus').textContent = 'Friends connected'; addFeed({ system: true, text: 'A friend found the party trail.' }); };
-      room.onPeerLeave = peerId => { const name = members.get(peerId)?.name || 'A friend'; members.delete(peerId); if (peerId === leaderId) { leaderId = [selfId, ...members.keys()].sort()[0]; isHost = leaderId === selfId; } renderMembers(); $('#partyStatus').textContent = members.size > 1 ? 'Friends connected' : 'Waiting for friends'; addFeed({ system: true, text: `${name} left the party.` }); };
+      room.onPeerLeave = peerId => { const name = members.get(peerId)?.name || 'A friend'; members.delete(peerId); if (pauseRequest?.participants.includes(peerId)) clearPauseRequest(`${name} left, so the pause request was canceled.`); if (peerId === leaderId) { leaderId = [selfId, ...members.keys()].sort()[0]; isHost = leaderId === selfId; } renderMembers(); $('#partyStatus').textContent = members.size > 1 ? 'Friends connected' : 'Waiting for friends'; addFeed({ system: true, text: `${name} left the party.` }); };
       connected = true; joining = false; members.set(selfId, selfMember()); showView('partyRoom'); $('#copyRoomCode').textContent = displayCode(roomCode); $('#partyStatus').textContent = 'Waiting for friends'; partyButton.classList.add('live'); renderMembers(); renderPartyTimer();
       if (!sharedMission) sharedMission = $('#quest')?.value === 'No active mission yet' || $('#quest')?.value === 'Choose your first quest' ? '' : $('#quest')?.value || '';
       $('#partyMission').value = sharedMission; $('#partyMissionBy').textContent = sharedMission ? 'Started from your active quest · synced for everyone' : 'Choose something that everyone can move forward.';
@@ -313,7 +405,7 @@
   function showConnectionError(message) { joining = false; connected = false; connectAttempt++; try { room?.leave?.(); } catch {} room = null; $('#partyErrorText').textContent = `${message} Solo Study Quest is still available.`; showView('partyError'); }
   async function leaveParty() {
     try { await room?.leave?.(); } catch {}
-    room = null; actions = {}; members.clear(); messages.length = 0; connected = false; joining = false; connectAttempt++; roomCode = ''; leaderId = ''; isHost = false; partyButton.classList.remove('live'); $('#partyCount').textContent = '1'; history.replaceState(null, '', `${location.pathname}${location.search}`); showView('partyLobby'); renderMembers();
+    room = null; actions = {}; members.clear(); messages.length = 0; pauseRequest = null; consensusPauseAuthorized = false; connected = false; joining = false; connectAttempt++; roomCode = ''; leaderId = ''; isHost = false; partyButton.classList.remove('live'); $('#partyCount').textContent = '1'; history.replaceState(null, '', `${location.pathname}${location.search}`); showView('partyLobby'); renderMembers();
   }
 
   partyButton.onclick = () => openParty();
@@ -337,13 +429,22 @@
   $('#savePartyMission').onclick = () => { const text = $('#partyMission').value.trim(); if (!text) return; sharedMission = text; actions.mission?.send({ text }); $('#partyMissionBy').textContent = `Set by ${prefs.name} · synced for everyone`; $('#quest').value = text; $('#saveQuest')?.click(); addFeed({ system: true, text: 'You set the party mission.' }); };
   $('#toggleReady').onclick = () => { const current = members.get(selfId) || selfMember(); current.ready = !current.ready; members.set(selfId, current); actions.ready?.send(current.ready); $('#toggleReady').textContent = current.ready ? 'Ready ✓' : 'I’m ready'; $('#toggleReady').classList.toggle('ready', current.ready); renderMembers(); };
   $('#partyStart').onclick = () => $('#start')?.click();
+  $('#allowPartyPause').onclick = () => voteOnPause(true);
+  $('#declinePartyPause').onclick = () => voteOnPause(false);
   $$('.party-durations button').forEach(button => button.onclick = () => { const minutes = Number(button.dataset.partyMin); const preset = $(`.preset[data-min="${minutes}"]`); if (preset) preset.click(); else if (typeof chosen === 'number') { if (running) stop(); chosen = minutes; left = minutes * 60; $('#start').textContent = 'Begin focus quest'; $('#modeLabel').textContent = 'ready'; drawClock(); } setTimeout(() => { const snapshot = currentTimerSnapshot(); snapshot.stamp = Date.now(); lastTimerStamp = snapshot.stamp; actions.timer?.send(snapshot); renderPartyTimer(snapshot); }, 40); });
-  $('#partyChatForm').onsubmit = event => { event.preventDefault(); const input = $('#partyMessage'), text = input.value.trim(); if (!text) return; actions.chat?.send({ text }); addFeed({ name: prefs.name, avatar: prefs.avatar, color: prefs.color, text, self: true }); input.value = ''; };
+  function resizeChatInput() { const input = $('#partyMessage'); input.style.height = 'auto'; input.style.height = `${Math.min(input.scrollHeight, 92)}px`; $('#partyChatCount').textContent = `${input.value.length}/500`; }
+  $('#partyChatForm').onsubmit = event => { event.preventDefault(); const input = $('#partyMessage'), text = input.value.trim(); if (!text) return; actions.chat?.send({ text }); addFeed({ name: prefs.name, avatar: prefs.avatar, color: prefs.color, text, self: true }); input.value = ''; resizeChatInput(); };
+  $('#partyMessage').addEventListener('input', resizeChatInput);
+  $('#partyMessage').addEventListener('keydown', event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); $('#partyChatForm').requestSubmit(); } });
   $('#partyReactions').innerHTML = REACTIONS.map(emoji => `<button type="button" data-reaction="${emoji}">${emoji}</button>`).join('');
   $('#partyReactions').onclick = event => { const button = event.target.closest('[data-reaction]'); if (!button) return; const emoji = button.dataset.reaction; actions.reaction?.send({ emoji }); floatReaction(emoji, prefs.name); addFeed({ system: true, text: `You sent ${emoji}` }); };
 
   $('#start')?.addEventListener('click', event => {
-    if (!connected || applyingRemote || (typeof running === 'boolean' && running)) return;
+    if (!connected || applyingRemote) return;
+    if (typeof running === 'boolean' && running) {
+      if (consensusPauseAuthorized) { consensusPauseAuthorized = false; return; }
+      event.preventDefault(); event.stopImmediatePropagation(); beginPauseRequest(); return;
+    }
     const state = readinessState();
     if (state.canStart) return;
     event.preventDefault(); event.stopImmediatePropagation();

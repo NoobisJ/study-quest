@@ -129,15 +129,19 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
 .party-invite-sheet{position:absolute;inset:0;z-index:20;background:#0a1c18c9;backdrop-filter:blur(10px);display:none;place-items:center;padding:18px}.party-invite-sheet.show{display:grid;animation:partyFade .18s ease}.party-invite-card{width:min(440px,100%);background:var(--surface);border:1px solid color-mix(in srgb,var(--border) 60%,white);border-radius:25px;padding:28px;box-shadow:0 30px 90px #0008;position:relative;text-align:center;animation:partyRise .22s ease}.party-invite-close{position:absolute;right:13px;top:13px;width:34px;height:34px;border:0;border-radius:50%;background:var(--surface-2);color:var(--text);font-size:18px}.party-invite-icon{width:54px;height:54px;margin:0 auto 12px;border-radius:18px;display:grid;place-items:center;background:var(--realm-soft);color:var(--realm-accent);font-size:24px}.party-invite-card h3{font:29px Georgia,serif;margin:6px 0 8px}.party-invite-card>p{font-size:10px;line-height:1.55;color:var(--text-soft);margin:0 auto 16px;max-width:350px}.party-code-copy{width:100%;border:1px solid color-mix(in srgb,var(--realm-accent) 30%,var(--border));border-radius:15px;background:color-mix(in srgb,var(--realm-soft) 55%,var(--surface-3));padding:11px 12px;display:grid;grid-template-columns:1fr auto;align-items:center;text-align:left;color:var(--text)}.party-code-copy span{grid-column:1/-1;font-size:7px;text-transform:uppercase;letter-spacing:.14em;color:var(--text-soft);font-weight:900}.party-code-copy strong{font:900 18px ui-monospace,monospace;letter-spacing:.1em;margin-top:3px}.party-code-copy i{font-style:normal;font-size:8px;font-weight:900;color:var(--realm-accent);background:var(--surface-3);border-radius:8px;padding:6px 8px}.party-link-copy,.party-native-share{width:100%;border:0;border-radius:12px;padding:11px;margin-top:8px;font-size:9px;font-weight:900}.party-link-copy{background:var(--realm-accent);color:white}.party-native-share{background:var(--surface-2);color:var(--text)}.party-invite-status{min-height:18px;margin-top:8px;font-size:8px;color:var(--realm-accent);font-weight:800}.party-invite-status.error{color:#c45f52}.party-invite-card>small{display:block;font-size:7px;line-height:1.45;color:var(--text-soft);margin-top:5px}
 @media(max-width:560px){.party-invite-sheet{padding:8px}.party-invite-card{padding:24px 18px;border-radius:19px}.party-invite-card h3{font-size:25px}.party-code-copy strong{font-size:16px}}
 .party-app{border:1px solid color-mix(in srgb,var(--realm-accent) 26%,var(--border));background:color-mix(in srgb,var(--surface) 85%,var(--realm-soft));color:var(--text);border-radius:999px;padding:8px 11px;display:flex;align-items:center;gap:6px;font-size:10px;font-weight:900;box-shadow:0 7px 20px #17352d0d;transition:.2s}.party-app:hover{transform:translateY(-1px);border-color:var(--realm-accent)}.party-app i{font-style:normal;background:var(--realm-accent);color:white;min-width:18px;height:18px;border-radius:99px;display:grid;place-items:center;font-size:8px}.party-app.live .party-spark{color:#e6a84b;animation:partySpark 1.4s ease infinite}.sq-party-nav{border:0!important;text-decoration:none;background:transparent!important;color:var(--text-soft)!important;border-radius:13px!important;padding:8px 12px!important;font-size:11px!important;font-weight:850!important;display:flex!important;align-items:center!important;gap:6px!important;white-space:nowrap}.sq-party-nav:hover{background:var(--surface-2)!important;color:var(--text)!important}
-.party-modal{position:fixed;inset:0;z-index:220;background:#0a1c18d9;backdrop-filter:blur(13px);display:none;place-items:center;padding:14px}.party-modal.show{display:grid;animation:partyFade .2s ease}.party-shell{width:min(1050px,100%);height:min(760px,95vh);background:var(--surface);color:var(--text);border:1px solid #ffffff25;border-radius:30px;box-shadow:0 40px 130px #0009;position:relative;overflow:hidden}.party-close{position:absolute;right:16px;top:16px;z-index:8;width:38px;height:38px;border:0;border-radius:50%;background:color-mix(in srgb,var(--surface-2) 88%,transparent);color:var(--text);font-size:20px;backdrop-filter:blur(10px)}.party-lobby,.party-room,.party-loading,.party-error{display:none;height:100%}.party-lobby.active{display:grid;grid-template-columns:.92fr 1.08fr}.party-room.active{display:block;overflow:auto}.party-loading.active,.party-error.active{display:grid;place-content:center;text-align:center;padding:30px}
+.party-modal{position:fixed;inset:0;z-index:220;background:#0a1c18d9;backdrop-filter:blur(13px);display:none;place-items:center;padding:14px}.party-modal.show{display:grid;animation:partyFade .2s ease}.party-shell{width:min(1050px,100%);height:min(760px,95vh);min-width:700px;min-height:560px;max-width:calc(100vw - 28px);max-height:95vh;resize:both;container-type:size;background:var(--surface);color:var(--text);border:1px solid #ffffff25;border-radius:30px;box-shadow:0 40px 130px #0009;position:relative;overflow:hidden}.party-close{position:absolute;right:16px;top:16px;z-index:8;width:38px;height:38px;border:0;border-radius:50%;background:color-mix(in srgb,var(--surface-2) 88%,transparent);color:var(--text);font-size:20px;backdrop-filter:blur(10px)}.party-lobby,.party-room,.party-loading,.party-error{display:none;height:100%}.party-lobby.active{display:grid;grid-template-columns:.92fr 1.08fr}.party-room.active{display:block;overflow:auto}.party-loading.active,.party-error.active{display:grid;place-content:center;text-align:center;padding:30px}
 .party-hero{padding:54px 42px;background:radial-gradient(circle at 72% 18%,#ffe98a42 0 5%,transparent 23%),linear-gradient(155deg,#173c32,#315e4d 58%,#638763);color:#fff;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}.party-hero:before,.party-hero:after{content:"";position:absolute;border:1px solid #ffffff18;border-radius:50%}.party-hero:before{width:310px;height:310px;right:-160px;top:-90px}.party-hero:after{width:230px;height:230px;left:-130px;bottom:-90px}.party-orbit{width:112px;height:112px;border-radius:36px;background:#ffffff12;border:1px solid #ffffff20;display:grid;place-items:center;position:relative;margin-bottom:24px;box-shadow:inset 0 0 50px #ffffff0b}.party-orbit span{font-size:56px;filter:drop-shadow(0 12px 14px #0004);animation:partyFloat 3s ease-in-out infinite}.party-orbit i,.party-orbit b{position:absolute;font-style:normal;color:#f6d778}.party-orbit i{right:-15px;top:12px;font-size:24px}.party-orbit b{left:-18px;bottom:8px;font-size:12px}.party-kicker{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#bfe0c9;font-weight:900}.party-hero h2{font:clamp(35px,5vw,51px)/1 Georgia,serif;margin:8px 0 14px}.party-hero>p{color:#d9e8df;font-size:13px;line-height:1.6;max-width:410px}.party-benefits{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}.party-benefits span{background:#ffffff0e;border:1px solid #ffffff1e;border-radius:99px;padding:7px 10px;font-size:9px;color:#edf5ef;font-weight:750}.party-benefits b{color:#f6d778;margin-right:4px}
 .party-setup{padding:52px 46px 34px;overflow:auto}.party-tabs{background:var(--surface-2);padding:4px;border-radius:14px;display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:24px}.party-tabs button{border:0;border-radius:11px;padding:10px;background:transparent;color:var(--text-soft);font-size:11px;font-weight:900}.party-tabs button.active{background:var(--surface-3);color:var(--text);box-shadow:0 4px 14px #17352d12}.party-profile{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-bottom:20px}.party-profile label,.party-code-field{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--text-soft);display:grid;gap:7px}.party-profile input,.party-code-field input,.party-mission-edit input,#partyChatForm input{border:1px solid var(--border);background:var(--surface-3);color:var(--text);border-radius:12px;padding:11px 12px;outline:0}.party-profile input:focus,.party-code-field input:focus,.party-mission-edit input:focus,#partyChatForm input:focus{border-color:var(--realm-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--realm-accent) 14%,transparent)}.party-profile>div>span{display:block;font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--text-soft);margin-bottom:7px}.party-avatar-picker{display:flex;gap:4px;flex-wrap:wrap}.party-avatar-picker button{width:32px;height:32px;border:1px solid var(--border);background:var(--surface-3);border-radius:10px;font-size:17px;padding:0}.party-avatar-picker button.active{border-color:var(--realm-accent);background:var(--realm-soft);transform:translateY(-2px)}.party-pane{display:none}.party-pane.active{display:block;animation:partyRise .2s ease}.party-note{display:flex;gap:10px;background:color-mix(in srgb,var(--realm-soft) 55%,var(--surface));border:1px solid color-mix(in srgb,var(--realm-accent) 15%,var(--border));border-radius:14px;padding:12px;margin-bottom:12px}.party-note>span{font-size:20px}.party-note p{font-size:9px;color:var(--text-soft);margin:0;line-height:1.45}.party-note b{display:block;color:var(--text);font-size:10px}.party-main{width:100%;border:0;border-radius:13px;background:var(--realm-accent);color:#fff;padding:13px;font-weight:900;box-shadow:0 8px 24px color-mix(in srgb,var(--realm-accent) 28%,transparent)}.party-code-field input{font:800 18px ui-monospace,monospace;text-align:center;letter-spacing:.12em;margin-bottom:10px}.party-code-field input.invalid{border-color:#c85f52;animation:partyShake .25s}.party-privacy{font-size:8px;line-height:1.5;color:var(--text-soft);text-align:center;margin:17px 15px 0}
 .party-room-head{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:19px 26px;background:color-mix(in srgb,var(--surface) 91%,transparent);border-bottom:1px solid var(--border);backdrop-filter:blur(18px)}.party-room-head h2{font:26px Georgia,serif;margin:2px 0}.party-room-head p{font-size:9px;color:var(--text-soft);margin:0}.party-room-head p button{border:0;background:transparent;color:var(--realm-accent);padding:0;font:800 9px ui-monospace,monospace}.party-live{display:flex;align-items:center;gap:6px;color:var(--realm-accent);font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:.1em}.party-live i{width:7px;height:7px;border-radius:50%;background:#55b66d;box-shadow:0 0 0 5px #55b66d18;animation:partyPulse 1.8s ease infinite}.party-room-actions{display:flex;gap:7px}.party-room-actions button{border:1px solid var(--border);border-radius:11px;padding:9px 11px;background:var(--surface-3);color:var(--text);font-size:9px;font-weight:850}.party-room-actions button:first-child{background:var(--realm-accent);border-color:var(--realm-accent);color:#fff}.party-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(255px,.65fr);gap:14px;padding:16px;background:color-mix(in srgb,var(--surface-2) 55%,var(--surface));min-height:calc(100% - 91px)}.party-main-column,.party-side-column{display:grid;gap:12px;align-content:start}.party-mission-card,.party-timer-card,.party-chat-card,.party-members-card,.party-reaction-card,.party-promise{background:var(--surface-3);border:1px solid var(--border);border-radius:19px;padding:16px}.party-card-label{font-size:8px;font-weight:950;letter-spacing:.14em;text-transform:uppercase;color:var(--realm-accent);margin-bottom:9px}.party-mission-edit{display:flex;gap:7px}.party-mission-edit input{flex:1;font:20px Georgia,serif;padding:9px 10px}.party-mission-edit button,#partyChatForm button{border:0;border-radius:11px;background:var(--realm-accent);color:white;padding:9px 12px;font-size:9px;font-weight:900}.party-mission-card>p{font-size:8px;color:var(--text-soft);margin:7px 2px 0}.party-timer-card{display:grid;grid-template-columns:190px 1fr;gap:24px;align-items:center;background:linear-gradient(140deg,color-mix(in srgb,var(--realm-soft) 65%,var(--surface-3)),var(--surface-3))}.party-timer-ring{--party-angle:0deg;width:170px;height:170px;border-radius:50%;background:conic-gradient(var(--realm-accent) var(--party-angle),var(--surface-2) 0);display:grid;place-items:center;box-shadow:0 15px 40px #17352d14}.party-timer-ring:before{content:"";position:absolute}.party-timer-ring>div{width:140px;height:140px;border-radius:50%;background:var(--surface-3);display:grid;place-content:center;text-align:center}.party-timer-ring strong{font:40px Georgia,serif}.party-timer-ring span{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-soft);font-weight:900}.party-timer-controls h3{font:24px Georgia,serif;margin:0 0 5px}.party-timer-controls>p{font-size:9px;color:var(--text-soft);line-height:1.45;margin:0 0 12px}.party-durations{display:flex;gap:5px;margin-bottom:8px}.party-durations button{flex:1;border:1px solid var(--border);border-radius:9px;background:var(--surface-3);color:var(--text-soft);padding:7px;font-size:9px;font-weight:850}.party-durations button.active{background:var(--realm-accent);border-color:var(--realm-accent);color:#fff}.party-focus-button{width:100%;border:0;border-radius:12px;background:#173c32;color:#fff;padding:11px;font-size:10px;font-weight:900}.party-chat-card{padding-bottom:12px}.party-feed{height:146px;overflow:auto;display:grid;gap:8px;align-content:start;padding:3px}.party-feed-system{display:flex;justify-content:center;gap:8px;color:var(--text-soft);font-size:8px}.party-feed-system time{opacity:.65}.party-feed-message{display:grid;grid-template-columns:30px 1fr auto;gap:8px;align-items:start}.party-feed-message>div{width:28px;height:28px;border-radius:9px;background:color-mix(in srgb,var(--member) 18%,var(--surface-2));display:grid;place-items:center}.party-feed-message p{margin:0}.party-feed-message p b{display:block;font-size:8px;color:var(--text-soft)}.party-feed-message p span{display:inline-block;background:var(--surface-2);border-radius:4px 11px 11px 11px;padding:7px 9px;font-size:9px;margin-top:2px}.party-feed-message.self p span{background:var(--realm-soft)}.party-feed-message time{font-size:7px;color:var(--text-soft);padding-top:4px}#partyChatForm{display:grid;grid-template-columns:1fr auto;gap:7px;border-top:1px solid var(--border);padding-top:10px;margin-top:8px}#partyChatForm input{padding:9px 10px;font-size:9px}
 .party-card-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}.party-card-title span{font:18px Georgia,serif;display:block}.party-card-title strong{font-size:8px;color:var(--text-soft)}.party-card-title button{border:1px solid var(--realm-accent);background:transparent;color:var(--realm-accent);border-radius:9px;padding:7px 8px;font-size:8px;font-weight:900}.party-card-title button.ready{background:var(--realm-accent);color:white}.party-members{display:grid;gap:7px}.party-member{display:grid;grid-template-columns:auto 1fr auto;gap:9px;align-items:center;padding:7px;border-radius:12px;background:var(--surface-2)}.party-member-avatar{width:34px;height:34px;border-radius:11px;background:color-mix(in srgb,var(--member) 18%,var(--surface));display:grid;place-items:center;position:relative}.party-member-avatar i{position:absolute;width:8px;height:8px;border-radius:50%;background:#55b66d;border:2px solid var(--surface-2);right:-2px;bottom:-2px}.party-member strong{font-size:9px;display:block}.party-member strong small{font-size:7px;color:var(--text-soft)}.party-member span{font-size:7px;color:var(--text-soft)}.party-member>b{color:var(--text-soft)}.party-member.ready{box-shadow:inset 3px 0 var(--realm-accent)}.party-member.ready>b{color:var(--realm-accent)}.party-reactions{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}.party-reactions button{border:1px solid var(--border);background:var(--surface-2);border-radius:9px;padding:7px 3px;font-size:17px;transition:.15s}.party-reactions button:hover{transform:translateY(-3px) scale(1.08);background:var(--realm-soft)}.party-promise{display:flex;gap:10px;background:linear-gradient(145deg,#173c32,#315d4d);color:#fff;border:0}.party-promise>span{font-size:24px}.party-promise b{font-size:10px}.party-promise p{font-size:8px;line-height:1.5;color:#d0e1d8;margin:3px 0 0}.party-loading,.party-error{background:radial-gradient(circle at 50% 35%,var(--realm-soft),var(--surface) 52%)}.party-loading h3,.party-error h3{font:30px Georgia,serif;margin:17px 0 6px}.party-loading p,.party-error p{font-size:10px;color:var(--text-soft);max-width:340px}.party-loading button,.party-error button{justify-self:center;border:1px solid var(--border);background:var(--surface-3);color:var(--text);border-radius:11px;padding:9px 17px;font-size:9px;font-weight:850;margin-top:10px}.party-error>span{font-size:48px}.party-loader{display:flex;justify-content:center;gap:7px}.party-loader i{width:12px;height:12px;border-radius:50%;background:var(--realm-accent);animation:partyBounce .9s ease infinite}.party-loader i:nth-child(2){animation-delay:.15s}.party-loader i:nth-child(3){animation-delay:.3s}.party-reaction-layer{position:fixed;inset:0;z-index:300;pointer-events:none;overflow:hidden}.party-reaction-float{position:absolute;left:var(--x);bottom:8vh;font-size:42px;filter:drop-shadow(0 8px 10px #0003);animation:partyReaction 2.5s ease-out forwards}
 .party-focus-button:disabled{cursor:not-allowed;background:color-mix(in srgb,var(--text-soft) 45%,var(--surface-2));color:color-mix(in srgb,var(--text) 55%,transparent);box-shadow:none}.party-ready-gate{min-height:16px;margin-top:8px;text-align:center;color:var(--text-soft);font-size:8px;font-weight:800}.party-ready-gate.ready{color:var(--realm-accent)}.party-ready-gate.attention{animation:partyGateNudge .38s ease}
+.party-pause-vote{margin-top:9px;padding:10px;border:1px solid color-mix(in srgb,var(--realm-accent) 28%,var(--border));border-radius:12px;background:color-mix(in srgb,var(--realm-soft) 55%,var(--surface-3));animation:partyRise .18s ease}.party-pause-vote[hidden]{display:none}.party-pause-vote p{font-size:9px;line-height:1.4;margin:0 0 3px;color:var(--text)}.party-pause-vote>strong{display:block;font-size:7px;color:var(--text-soft);margin-bottom:8px}.party-pause-vote>div{display:flex;gap:6px}.party-pause-vote button{flex:1;border:1px solid var(--border);border-radius:9px;padding:7px;background:var(--surface-3);color:var(--text);font-size:8px;font-weight:900}.party-pause-vote button:first-child{border-color:var(--realm-accent);background:var(--realm-accent);color:#fff}
+.party-feed{height:clamp(146px,22cqh,280px)}.party-feed-message{grid-template-columns:30px minmax(0,1fr) auto;min-width:0}.party-feed-message p{min-width:0}.party-feed-message p span{display:block;max-width:100%;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;line-height:1.45}.party-feed-message time{white-space:nowrap}.party-feed-system{min-width:0;flex-wrap:wrap}.party-feed-system span{min-width:0;overflow-wrap:anywhere}#partyChatForm{grid-template-columns:minmax(0,1fr) auto;align-items:end}#partyChatForm textarea{width:100%;min-width:0;max-height:92px;resize:none;overflow-y:auto;border:1px solid var(--border);background:var(--surface-3);color:var(--text);border-radius:12px;padding:9px 10px;outline:0;font:inherit;font-size:9px;line-height:1.45}#partyChatForm textarea:focus{border-color:var(--realm-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--realm-accent) 14%,transparent)}#partyChatForm>div{display:grid;gap:3px;justify-items:end}#partyChatForm>div span{font-size:7px;color:var(--text-soft)}
+.party-resize-hint{position:absolute;right:5px;bottom:5px;z-index:19;width:22px;height:22px;display:grid;align-content:end;justify-content:end;gap:2px;pointer-events:none;opacity:.48}.party-resize-hint i{display:block;height:1px;background:var(--text-soft);transform:rotate(-45deg);transform-origin:right}.party-resize-hint i:nth-child(1){width:7px}.party-resize-hint i:nth-child(2){width:12px}.party-resize-hint i:nth-child(3){width:17px}
 @keyframes partyGateNudge{25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}@keyframes partyFade{from{opacity:0}}@keyframes partyRise{from{transform:translateY(7px);opacity:0}}@keyframes partyFloat{50%{transform:translateY(-7px) rotate(2deg)}}@keyframes partySpark{50%{transform:scale(1.25);opacity:.55}}@keyframes partyPulse{50%{box-shadow:0 0 0 9px #55b66d05}}@keyframes partyBounce{50%{transform:translateY(-10px);opacity:.5}}@keyframes partyShake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}@keyframes partyReaction{0%{transform:translate(0,0) scale(.6);opacity:0}12%{opacity:1;transform:translate(0,-20px) scale(1.1)}100%{transform:translate(var(--drift),-75vh) rotate(18deg) scale(1.35);opacity:0}}
 @media(max-width:850px){.party-shell{height:min(820px,96vh);border-radius:23px}.party-lobby.active{grid-template-columns:1fr}.party-hero{padding:30px;min-height:260px}.party-orbit{width:78px;height:78px;margin-bottom:14px}.party-orbit span{font-size:39px}.party-hero h2{font-size:34px}.party-setup{padding:28px}.party-grid{grid-template-columns:1fr}.party-side-column{grid-template-columns:1fr 1fr}.party-promise{grid-column:1/-1}.party-timer-card{grid-template-columns:160px 1fr}.party-timer-ring{width:150px;height:150px}.party-timer-ring>div{width:122px;height:122px}.sq-party-nav{flex-direction:column!important;gap:2px!important;padding:7px 11px!important;font-size:8px!important;flex:1}}
 @media(max-width:560px){.party-app span:nth-child(2){display:none}.party-app{padding:7px}.party-modal{padding:5px}.party-shell{border-radius:18px;height:98vh}.party-hero{padding:25px 20px;min-height:230px}.party-benefits{display:none}.party-setup{padding:22px 17px}.party-profile{grid-template-columns:1fr}.party-room-head{align-items:flex-start;padding:15px;flex-direction:column}.party-room-actions{width:100%}.party-room-actions button{flex:1}.party-grid{padding:8px}.party-timer-card{grid-template-columns:1fr;text-align:center}.party-timer-ring{margin:auto}.party-durations{justify-content:center}.party-side-column{grid-template-columns:1fr}.party-mission-edit{flex-direction:column}.party-mission-edit button{padding:10px}.party-reactions button{font-size:15px}.party-close{right:10px;top:10px}}
+@media(max-width:850px){.party-shell{width:100%!important;min-width:0;max-height:98vh;resize:none;container-type:normal}.party-resize-hint{display:none}.party-feed{height:180px}}
 @media(prefers-reduced-motion:reduce){.party-modal *,.party-reaction-float{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
   </style>
@@ -1089,6 +1093,8 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
   let leaderId = '';
   let isHost = false;
   let lastTimerStamp = 0;
+  let pauseRequest = null;
+  let consensusPauseAuthorized = false;
   const members = new Map();
   const messages = [];
 
@@ -1157,15 +1163,19 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
             <section class="party-timer-card">
               <div class="party-timer-ring" id="partyTimerRing"><div><strong id="partyTime">25:00</strong><span id="partyTimerMode">ready together</span></div></div>
               <div class="party-timer-controls">
-                <h3>One timer. One team.</h3><p>Everyone must be ready before the shared timer can start. Anyone can pause it.</p>
+                <h3>One timer. One team.</h3><p>Everyone must be ready to start, and everyone must approve before the timer pauses.</p>
                 <div class="party-durations"><button data-party-min="15">15m</button><button class="active" data-party-min="25">25m</button><button data-party-min="45">45m</button><button data-party-min="60">60m</button></div>
                 <button class="party-focus-button" id="partyStart" type="button">▶ Start together</button>
                 <div class="party-ready-gate" id="partyReadyGate" role="status" aria-live="polite"></div>
+                <div class="party-pause-vote" id="partyPauseVote" hidden>
+                  <p id="partyPausePrompt"></p><strong id="partyPauseCount"></strong>
+                  <div><button id="allowPartyPause" type="button">Allow pause</button><button id="declinePartyPause" type="button">Keep focusing</button></div>
+                </div>
               </div>
             </section>
             <section class="party-chat-card">
               <div class="party-card-label">Camp chat</div><div class="party-feed" id="partyFeed" aria-live="polite"></div>
-              <form id="partyChatForm"><input id="partyMessage" maxlength="160" placeholder="Send a quick message…" aria-label="Party message"><button>Send</button></form>
+              <form id="partyChatForm"><textarea id="partyMessage" rows="1" maxlength="500" placeholder="Send a message…" aria-label="Party message"></textarea><div><span id="partyChatCount">0/500</span><button>Send</button></div></form>
             </section>
           </main>
           <aside class="party-side-column">
@@ -1191,8 +1201,24 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
           <small>Only invite people you trust. The room disappears when everyone leaves.</small>
         </div>
       </div>
+      <div class="party-resize-hint" title="Drag this corner to resize the Study Party window" aria-hidden="true"><i></i><i></i><i></i></div>
     </section>`;
   document.body.appendChild(modal);
+
+  const partyShell = $('.party-shell');
+  const savedWindowSize = safeParse(localStorage.getItem('studyQuest.partyWindow.v1'), null);
+  if (innerWidth > 850 && savedWindowSize?.width && savedWindowSize?.height) {
+    partyShell.style.width = `${savedWindowSize.width}px`;
+    partyShell.style.height = `${savedWindowSize.height}px`;
+  }
+  if ('ResizeObserver' in window) {
+    let sizeSaveTimer;
+    new ResizeObserver(([entry]) => {
+      if (!modal.classList.contains('show') || innerWidth <= 850) return;
+      clearTimeout(sizeSaveTimer);
+      sizeSaveTimer = setTimeout(() => localStorage.setItem('studyQuest.partyWindow.v1', JSON.stringify({ width: Math.round(entry.contentRect.width), height: Math.round(entry.contentRect.height) })), 180);
+    }).observe(partyShell);
+  }
 
   const reactionLayer = document.createElement('div');
   reactionLayer.className = 'party-reaction-layer';
@@ -1239,12 +1265,80 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
     $('#partyReadyGate').classList.toggle('ready', state.canStart && !isTimerRunning);
     $('#partyStart').disabled = !isTimerRunning && !state.canStart;
   }
+  function memberName(memberId) {
+    if (memberId === selfId) return prefs.name || 'You';
+    return members.get(memberId)?.name || 'A friend';
+  }
+  function renderPauseVote() {
+    const panel = $('#partyPauseVote');
+    if (!pauseRequest || !(typeof running === 'boolean' && running)) { panel.hidden = true; return; }
+    const pending = pauseRequest.participants.filter(id => !pauseRequest.approvals.has(id));
+    const selfApproved = pauseRequest.approvals.has(selfId);
+    if (pauseRequest.requesterId === selfId) $('#partyPausePrompt').textContent = pending.length ? `Pause requested · waiting for ${pending.map(memberName).join(' and ')}.` : 'Everyone approved. Pausing together…';
+    else if (selfApproved) $('#partyPausePrompt').textContent = pending.length ? `You allowed the pause · waiting for ${pending.map(memberName).join(' and ')}.` : 'Everyone approved. Pausing together…';
+    else $('#partyPausePrompt').textContent = `${pauseRequest.requesterName} wants to pause for everyone.`;
+    $('#partyPauseCount').textContent = `${pauseRequest.approvals.size}/${pauseRequest.participants.length} approved`;
+    $('#allowPartyPause').hidden = selfApproved;
+    $('#declinePartyPause').textContent = pauseRequest.requesterId === selfId ? 'Cancel request' : 'Keep focusing';
+    panel.hidden = false;
+  }
+  function clearPauseRequest(message = '') {
+    pauseRequest = null; renderPauseVote();
+    if (message) addFeed({ system: true, text: message });
+  }
+  function beginPauseRequest() {
+    if (pauseRequest || !(typeof running === 'boolean' && running)) { renderPauseVote(); return; }
+    if (!modal.classList.contains('show')) openParty();
+    const participants = partyMemberList().map(member => member.id);
+    pauseRequest = { id: `${selfId}-${Date.now()}`, requesterId: selfId, requesterName: prefs.name || 'Trail Friend', participants, approvals: new Set([selfId]) };
+    actions.pause?.send({ type: 'request', id: pauseRequest.id, requesterName: pauseRequest.requesterName, participants });
+    renderPauseVote(); addFeed({ system: true, text: 'You asked the party to pause. The timer keeps running until everyone agrees.' });
+  }
+  function maybeCompletePauseVote() {
+    if (!pauseRequest || pauseRequest.requesterId !== selfId || !pauseRequest.participants.every(id => pauseRequest.approvals.has(id))) return;
+    const requestId = pauseRequest.id;
+    actions.pause?.send({ type: 'approved', id: requestId });
+    clearPauseRequest('Everyone approved the pause.');
+    consensusPauseAuthorized = true;
+    $('#start')?.click();
+    setTimeout(() => { consensusPauseAuthorized = false; }, 250);
+  }
+  function voteOnPause(allow) {
+    if (!pauseRequest) return;
+    if (!allow) {
+      actions.pause?.send({ type: 'decline', id: pauseRequest.id });
+      clearPauseRequest(pauseRequest.requesterId === selfId ? 'You canceled the pause request.' : 'You chose to keep the focus timer running.');
+      return;
+    }
+    pauseRequest.approvals.add(selfId);
+    actions.pause?.send({ type: 'vote', id: pauseRequest.id, allow: true });
+    renderPauseVote(); maybeCompletePauseVote();
+  }
+  function receivePauseAction(data, peerId) {
+    if (!data || !data.type) return;
+    if (data.type === 'request') {
+      if (!(typeof running === 'boolean' && running)) return;
+      const incomingId = String(data.id || '');
+      if (pauseRequest && pauseRequest.id !== incomingId && pauseRequest.id.localeCompare(incomingId) < 0) return;
+      if (pauseRequest?.id === incomingId) return;
+      const participants = [...new Set([...(Array.isArray(data.participants) ? data.participants : []), peerId, selfId])];
+      pauseRequest = { id: String(data.id || ''), requesterId: peerId, requesterName: members.get(peerId)?.name || String(data.requesterName || 'A friend'), participants, approvals: new Set([peerId]) };
+      if (!modal.classList.contains('show')) openParty();
+      renderPauseVote(); addFeed({ system: true, text: `${pauseRequest.requesterName} asked everyone to approve a pause.` });
+      return;
+    }
+    if (!pauseRequest || data.id !== pauseRequest.id) return;
+    if (data.type === 'vote' && data.allow) { pauseRequest.approvals.add(peerId); renderPauseVote(); maybeCompletePauseVote(); }
+    if (data.type === 'decline') clearPauseRequest(`${members.get(peerId)?.name || 'A friend'} chose to keep focusing.`);
+    if (data.type === 'approved') clearPauseRequest('Everyone approved the pause.');
+  }
   function renderMembers() {
     const list = partyMemberList();
     $('#partyCount').textContent = list.length;
     $('#partyMemberCount').textContent = `${list.length} adventurer${list.length === 1 ? '' : 's'}`;
     $('#partyMembers').innerHTML = list.map(member => `<article class="party-member ${member.ready ? 'ready' : ''}"><div class="party-member-avatar" style="--member:${esc(member.color || COLORS[0])}">${esc(member.avatar || '🧭')}<i></i></div><div><strong>${esc(member.name)}${member.self ? ' <small>you</small>' : ''}</strong><span>${member.ready ? 'Ready to focus' : 'At the camp'}</span></div><b>${member.ready ? '✓' : '·'}</b></article>`).join('');
     renderReadyGate();
+    renderPauseVote();
   }
   function addFeed(entry) {
     messages.push({ at: Date.now(), ...entry });
@@ -1313,6 +1407,7 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
     const total = Math.max(60, snapshot.minutes * 60); $('#partyTimerRing').style.setProperty('--party-angle', `${360 * (total - remaining) / total}deg`);
     $$('.party-durations button').forEach(button => button.classList.toggle('active', Number(button.dataset.partyMin) === snapshot.minutes));
     renderReadyGate();
+    renderPauseVote();
   }
   function applyTimer(snapshot, sourceName = 'A friend') {
     if (!snapshot || snapshot.stamp <= lastTimerStamp || typeof chosen !== 'number') return;
@@ -1324,7 +1419,7 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
       $$('.preset').forEach(button => button.classList.toggle('active', Number(button.dataset.min) === chosen));
       drawClock();
       if (snapshot.status === 'running') $('#start')?.click();
-      else { $('#start').textContent = snapshot.status === 'paused' ? 'Resume focus quest' : 'Begin focus quest'; $('#modeLabel').textContent = snapshot.status === 'paused' ? 'paused' : 'ready'; }
+      else { pauseRequest = null; $('#start').textContent = snapshot.status === 'paused' ? 'Resume focus quest' : 'Begin focus quest'; $('#modeLabel').textContent = snapshot.status === 'paused' ? 'paused' : 'ready'; }
       renderPartyTimer(snapshot); addFeed({ system: true, text: snapshot.status === 'running' ? `${sourceName} started the focus timer.` : snapshot.status === 'paused' ? `${sourceName} paused the timer.` : `${sourceName} changed the timer.` });
     } finally { setTimeout(() => { applyingRemote = false; }, 220); }
   }
@@ -1344,17 +1439,18 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
       isHost = host;
       room = module.joinRoom({ appId: 'chatgpt.study-quest.party.v1', password: roomCode }, `study-quest-${roomCode}`, { onJoinError: ({ error }) => showConnectionError(error?.message || 'A peer connection could not be completed.') });
       leaderId = isHost ? selfId : '';
-      actions.hello = room.makeAction('sq-hello'); actions.snapshot = room.makeAction('sq-snapshot'); actions.mission = room.makeAction('sq-mission'); actions.timer = room.makeAction('sq-timer'); actions.ready = room.makeAction('sq-ready'); actions.reaction = room.makeAction('sq-reaction'); actions.chat = room.makeAction('sq-chat'); actions.complete = room.makeAction('sq-complete');
+      actions.hello = room.makeAction('sq-hello'); actions.snapshot = room.makeAction('sq-snapshot'); actions.mission = room.makeAction('sq-mission'); actions.timer = room.makeAction('sq-timer'); actions.ready = room.makeAction('sq-ready'); actions.pause = room.makeAction('sq-pause'); actions.reaction = room.makeAction('sq-reaction'); actions.chat = room.makeAction('sq-chat'); actions.complete = room.makeAction('sq-complete');
       actions.hello.onMessage = (member, { peerId }) => { members.set(peerId, { ...member, ready: Boolean(member.ready) }); if (member.host) leaderId = peerId; if (!leaderId) leaderId = [selfId, ...members.keys()].sort()[0]; isHost = leaderId === selfId; renderMembers(); syncSnapshot(peerId); };
       actions.snapshot.onMessage = (data, { peerId }) => { if (data.leaderId) leaderId = data.leaderId; if (leaderId && peerId !== leaderId) return; if (data.mission && !sharedMission) { sharedMission = data.mission; $('#partyMission').value = sharedMission; $('#partyMissionBy').textContent = `Shared by ${members.get(peerId)?.name || 'a party member'}.`; } if (data.timer) applyTimer(data.timer, members.get(peerId)?.name || 'A friend'); renderMembers(); };
       actions.mission.onMessage = (data, { peerId }) => { sharedMission = String(data.text || '').slice(0, 120); $('#partyMission').value = sharedMission; const member = members.get(peerId); $('#partyMissionBy').textContent = `Set by ${member?.name || 'a party member'} · synced for everyone`; addFeed({ system: true, text: `${member?.name || 'A friend'} set the party mission.` }); };
       actions.timer.onMessage = (snapshot, { peerId }) => applyTimer(snapshot, members.get(peerId)?.name || 'A friend');
       actions.ready.onMessage = (ready, { peerId }) => { const member = members.get(peerId) || {}; members.set(peerId, { ...member, ready: Boolean(ready) }); renderMembers(); };
+      actions.pause.onMessage = (data, { peerId }) => receivePauseAction(data, peerId);
       actions.reaction.onMessage = (data, { peerId }) => { const member = members.get(peerId); floatReaction(data.emoji, member?.name); addFeed({ system: true, text: `${member?.name || 'A friend'} sent ${data.emoji}` }); };
-      actions.chat.onMessage = (data, { peerId }) => { const member = members.get(peerId) || {}; addFeed({ name: member.name || 'Trail Friend', avatar: member.avatar, color: member.color, text: String(data.text || '').slice(0, 160) }); };
+      actions.chat.onMessage = (data, { peerId }) => { const member = members.get(peerId) || {}; addFeed({ name: member.name || 'Trail Friend', avatar: member.avatar, color: member.color, text: String(data.text || '').slice(0, 500) }); };
       actions.complete.onMessage = (_, { peerId }) => { const member = members.get(peerId); floatReaction('🎉', member?.name); addFeed({ system: true, text: `${member?.name || 'A friend'} completed a focus quest!` }); };
       room.onPeerJoin = peerId => { members.set(peerId, { name: 'Joining friend…', avatar: '🧭', color: COLORS[members.size % COLORS.length], ready: false, host: false }); actions.hello.send({ name: prefs.name, avatar: prefs.avatar, color: prefs.color, ready: false, host: isHost }, { target: peerId }); if (leaderId === selfId) setTimeout(() => syncSnapshot(peerId), 120); renderMembers(); $('#partyStatus').textContent = 'Friends connected'; addFeed({ system: true, text: 'A friend found the party trail.' }); };
-      room.onPeerLeave = peerId => { const name = members.get(peerId)?.name || 'A friend'; members.delete(peerId); if (peerId === leaderId) { leaderId = [selfId, ...members.keys()].sort()[0]; isHost = leaderId === selfId; } renderMembers(); $('#partyStatus').textContent = members.size > 1 ? 'Friends connected' : 'Waiting for friends'; addFeed({ system: true, text: `${name} left the party.` }); };
+      room.onPeerLeave = peerId => { const name = members.get(peerId)?.name || 'A friend'; members.delete(peerId); if (pauseRequest?.participants.includes(peerId)) clearPauseRequest(`${name} left, so the pause request was canceled.`); if (peerId === leaderId) { leaderId = [selfId, ...members.keys()].sort()[0]; isHost = leaderId === selfId; } renderMembers(); $('#partyStatus').textContent = members.size > 1 ? 'Friends connected' : 'Waiting for friends'; addFeed({ system: true, text: `${name} left the party.` }); };
       connected = true; joining = false; members.set(selfId, selfMember()); showView('partyRoom'); $('#copyRoomCode').textContent = displayCode(roomCode); $('#partyStatus').textContent = 'Waiting for friends'; partyButton.classList.add('live'); renderMembers(); renderPartyTimer();
       if (!sharedMission) sharedMission = $('#quest')?.value === 'No active mission yet' || $('#quest')?.value === 'Choose your first quest' ? '' : $('#quest')?.value || '';
       $('#partyMission').value = sharedMission; $('#partyMissionBy').textContent = sharedMission ? 'Started from your active quest · synced for everyone' : 'Choose something that everyone can move forward.';
@@ -1364,7 +1460,7 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
   function showConnectionError(message) { joining = false; connected = false; connectAttempt++; try { room?.leave?.(); } catch {} room = null; $('#partyErrorText').textContent = `${message} Solo Study Quest is still available.`; showView('partyError'); }
   async function leaveParty() {
     try { await room?.leave?.(); } catch {}
-    room = null; actions = {}; members.clear(); messages.length = 0; connected = false; joining = false; connectAttempt++; roomCode = ''; leaderId = ''; isHost = false; partyButton.classList.remove('live'); $('#partyCount').textContent = '1'; history.replaceState(null, '', `${location.pathname}${location.search}`); showView('partyLobby'); renderMembers();
+    room = null; actions = {}; members.clear(); messages.length = 0; pauseRequest = null; consensusPauseAuthorized = false; connected = false; joining = false; connectAttempt++; roomCode = ''; leaderId = ''; isHost = false; partyButton.classList.remove('live'); $('#partyCount').textContent = '1'; history.replaceState(null, '', `${location.pathname}${location.search}`); showView('partyLobby'); renderMembers();
   }
 
   partyButton.onclick = () => openParty();
@@ -1388,13 +1484,22 @@ body.sq-focus-mode .sq-nav,body.sq-focus-mode .realm-dock,body.sq-focus-mode .qu
   $('#savePartyMission').onclick = () => { const text = $('#partyMission').value.trim(); if (!text) return; sharedMission = text; actions.mission?.send({ text }); $('#partyMissionBy').textContent = `Set by ${prefs.name} · synced for everyone`; $('#quest').value = text; $('#saveQuest')?.click(); addFeed({ system: true, text: 'You set the party mission.' }); };
   $('#toggleReady').onclick = () => { const current = members.get(selfId) || selfMember(); current.ready = !current.ready; members.set(selfId, current); actions.ready?.send(current.ready); $('#toggleReady').textContent = current.ready ? 'Ready ✓' : 'I’m ready'; $('#toggleReady').classList.toggle('ready', current.ready); renderMembers(); };
   $('#partyStart').onclick = () => $('#start')?.click();
+  $('#allowPartyPause').onclick = () => voteOnPause(true);
+  $('#declinePartyPause').onclick = () => voteOnPause(false);
   $$('.party-durations button').forEach(button => button.onclick = () => { const minutes = Number(button.dataset.partyMin); const preset = $(`.preset[data-min="${minutes}"]`); if (preset) preset.click(); else if (typeof chosen === 'number') { if (running) stop(); chosen = minutes; left = minutes * 60; $('#start').textContent = 'Begin focus quest'; $('#modeLabel').textContent = 'ready'; drawClock(); } setTimeout(() => { const snapshot = currentTimerSnapshot(); snapshot.stamp = Date.now(); lastTimerStamp = snapshot.stamp; actions.timer?.send(snapshot); renderPartyTimer(snapshot); }, 40); });
-  $('#partyChatForm').onsubmit = event => { event.preventDefault(); const input = $('#partyMessage'), text = input.value.trim(); if (!text) return; actions.chat?.send({ text }); addFeed({ name: prefs.name, avatar: prefs.avatar, color: prefs.color, text, self: true }); input.value = ''; };
+  function resizeChatInput() { const input = $('#partyMessage'); input.style.height = 'auto'; input.style.height = `${Math.min(input.scrollHeight, 92)}px`; $('#partyChatCount').textContent = `${input.value.length}/500`; }
+  $('#partyChatForm').onsubmit = event => { event.preventDefault(); const input = $('#partyMessage'), text = input.value.trim(); if (!text) return; actions.chat?.send({ text }); addFeed({ name: prefs.name, avatar: prefs.avatar, color: prefs.color, text, self: true }); input.value = ''; resizeChatInput(); };
+  $('#partyMessage').addEventListener('input', resizeChatInput);
+  $('#partyMessage').addEventListener('keydown', event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); $('#partyChatForm').requestSubmit(); } });
   $('#partyReactions').innerHTML = REACTIONS.map(emoji => `<button type="button" data-reaction="${emoji}">${emoji}</button>`).join('');
   $('#partyReactions').onclick = event => { const button = event.target.closest('[data-reaction]'); if (!button) return; const emoji = button.dataset.reaction; actions.reaction?.send({ emoji }); floatReaction(emoji, prefs.name); addFeed({ system: true, text: `You sent ${emoji}` }); };
 
   $('#start')?.addEventListener('click', event => {
-    if (!connected || applyingRemote || (typeof running === 'boolean' && running)) return;
+    if (!connected || applyingRemote) return;
+    if (typeof running === 'boolean' && running) {
+      if (consensusPauseAuthorized) { consensusPauseAuthorized = false; return; }
+      event.preventDefault(); event.stopImmediatePropagation(); beginPauseRequest(); return;
+    }
     const state = readinessState();
     if (state.canStart) return;
     event.preventDefault(); event.stopImmediatePropagation();

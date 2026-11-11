@@ -29,5 +29,5 @@ for (const source of markupSources) {
 const duplicateIds = [...new Set(ids.filter((entry, index) => ids.findIndex(other => other.id === entry.id) !== index).map(entry => entry.id))];
 if (duplicateIds.length) throw new Error(`Duplicate interface IDs: ${duplicateIds.join(', ')}`);
 
-if (!serviceWorker.includes("study-quest-shell-v12")) throw new Error('Expected offline shell v12.');
-console.log(`Validated ${localReferences.length} local assets, offline shell v12, and ${Math.round(Buffer.byteLength(portable) / 1024)} KB portable build.`);
+if (!serviceWorker.includes("study-quest-shell-v13")) throw new Error('Expected offline shell v13.');
+console.log(`Validated ${localReferences.length} local assets, offline shell v13, and ${Math.round(Buffer.byteLength(portable) / 1024)} KB portable build.`);
